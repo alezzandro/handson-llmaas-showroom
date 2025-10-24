@@ -50,7 +50,7 @@ In this first module, you will take your first step into the role of a platform 
 **What You'll Accomplish:**
 
 * Explore OpenShift AI architecture and its enterprise model-serving capabilities
-* Configure an API Gateway to securely expose model endpoints to end users
+* Understand how an API Gateway can securely expose model endpoints to end users
 
 **Your Learning Outcome:**
 

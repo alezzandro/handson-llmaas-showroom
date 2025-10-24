@@ -15,54 +15,9 @@ We'll use 3scale API Management to:
 
 In production deployments, you may simply replace 3scale with **your enterprise API Gateway of choice** while following the same architectural patterns.
 
-== Step 1: Accessing the 3Scale Admin Portal
+== Step 1: Explore the 3Scale Admin Portal
 
-Let's log into the 3scale Admin UI and manage access to the `granite-3dot2-8b-instruct` model.
-
-=== Get Your 3Scale Credentials
-
-The `admin-user` and `admin-password` values can be found in the `system-seed` secret in the `3scale` namespace.
-
-From a Terminal (in your OpenShift console) you will run a single command to retrieve these values. 
-
-NOTE: You could also retrieve the credentials by navigating to the location of the secret in the OpenShift console.
-
-* Navigate to the OpenShift console
-
-https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]
-
-* Select the terminal icon in the top navigation bar
-
-image::02/open-terminal.png[width="50%"]
-
-* You will need to initialize the terminal by pressing the `Start` button:
-
-image::03/03-initialize-terminal.png[width="50%"]
-
-* Copy the following command into the terminal session:
-
-
-[source,bash,role="execute",subs="+macros,+attributes"]
-----
-oc get secret system-seed -n 3scale -o template='{{range $key, $value := .data}}{{if or (eq $key "ADMIN_USER") (eq $key "ADMIN_PASSWORD")}}{{printf "%s: " $key}}{{ $value | base64decode }}{{"\n"}}{{end}}{{end}}'
-----
-
-NOTE: Save these values separately for the next step in your preferred notes app or similar method.
-
-=== Log into the Admin Portal
-
-Go to: https://maas-admin.{openshift_cluster_ingress_domain}/[https://maas-admin.{openshift_cluster_ingress_domain}/,window=_blank] 
-
-Use the credentials you just retrieved.
-
-You will be prompted by a wizard window. Close it by clicking on the top right corner of the screen.
-
-[.bordershadow]
-image::03/03-3scale-close-wizard.png[width="50%"]
-
-== Step 2: Explore the 3Scale Admin Portal
-
-Now you are in the control plane for the API services!
+Now we are going to take a look to the 3Scale API Admin portal that we configured for you. Because this is a shared environment you will just get access to the Developer view, as documented in the next section.
 
 Here is where platform engineers:
 
@@ -75,7 +30,7 @@ Here is where platform engineers:
 [.bordershadow]
 image::03/03-3scale-admin-dashboard.png[width="50%"]
 
-Use the dropdown menu at the top to explore these sections:
+In the dropdown menu at the top you could explore these sections:
 
 * **Audience**: this gives you information about the users, registrations, etc.
 * **Products**: this is where you can create the Products that people will have access to. You can see there are two products already created: `granite-3dot2-8b-instruct`, which is connected to the model that was pre-deployed,  and `API`, which is a default 3Scale echo API for testing.
@@ -90,25 +45,8 @@ For now, note the two key items:
 * A product named `granite-3dot2-8b-instruct` (mapped to your model)
 * A backend service with the same name powering that product
 
-[#3scale-dev-portal]
-== Step 3: Configure Developer Portal Access
 
-Developers access the models via the Developer Portal - your user-friendly frontend for API onboarding.
-
-Multiple users were already created for you in 3Scale in **(Audience->Accounts->Listing)**, but you still need to configure the developer portal to allow users to access it. In this configuration, our user is automatically subscribed to the `granite-3dot2-8b-instruct` service. In a production environment, you would normally automate this process as part of the deployment of a new product. 
-
-* In the Audience section, go to **Developer Portal->Settings->Domains & Access**.
-+
-[.bordershadow]
-image::03/03-3scale-portal-menu.png[width="50%"]
-
-* The Developer Portal Access Code is used to control the access the developer portal. You could use the default value in the next section to connect to it, but for today simply **delete it** and click on `Update Account`. This will remove the access code and allow anyone to access the developer portal, although they will still need to authenticate. This is what we will do in this workshop.
-+
-[.bordershadow]
-image::03/03-3scale-remove-access-code.png[width="50%"]
-
-
-== Step 4: Log in to the Developer Portal
+== Step 2: Log in to the Developer Portal
 
 // Add role shifting phrasing
 
@@ -137,7 +75,7 @@ Once logged in, you will see the following UI:
 [.bordershadow]
 image::03/03-3scale-developer-loggedin.png[width="50%"]
 
-== Step 5: Create an Application and Get an API Key
+== Step 3: Create an Application and Get an API Key
 
 As a developer, you will need to register an application to get credentials for API access. 
 
@@ -175,9 +113,7 @@ NOTE: Copy and save the **Endpoint URL**, **Model Name** and **API Key** informa
 
 You've continued walking in the shoes of our platform engineer and:
 
-* Logged into a production-grade API gateway
-* Located your deployed model as a 3scale product
-* Enabled access via the developer portal
+* Known more about a production-grade API gateway
 * Shifted to a developer's perspective and created a client application to securely retrieve an API key.
 
 That API key gives your model its first real consumer. A crucial step in turning infrastructure into a "service". 
