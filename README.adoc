@@ -6,7 +6,7 @@ In order to test and develop on your local machine, you can use a specially buil
 
 [source,sh]
 ----
-podman run --rm --name antora -v $PWD:/antora -p 8080:8080 -i -t ghcr.io/juliaaano/antora-viewer
+podman run --rm --name antora -v $PWD:/antora:Z -p 8080:8080 -i -t ghcr.io/juliaaano/antora-viewer
 ----
 
 > Note: If using a rootless podman replace `-v $PWD:/antora` with `-v $PWD:/antora:z`
