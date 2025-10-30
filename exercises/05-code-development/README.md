@@ -6,10 +6,12 @@ This directory contains the exercise materials for Module 2.1 of the "Private LL
 
 Students will complete a partially-built Flask web application that manages tasks with AI-powered suggestions and analysis. The exercise teaches:
 
+- Git repository migration from GitHub to Gitea
 - AI-assisted development using Continue.dev
 - Full-stack web application development with Flask
 - Integration of LLM APIs into applications
-- Building and deploying applications on OpenShift
+- Git-based development workflow (clone, commit, push)
+- Building and deploying applications on OpenShift from Git
 
 ## Application Structure
 
@@ -54,8 +56,22 @@ By completing this exercise, students will:
 
 - OpenShift Dev Spaces environment with Continue.dev configured (from Module 04)
 - Access to deployed Granite model (from Module 01)
+- Access to local Gitea instance on OpenShift
+- Ability to migrate/import repositories from GitHub to Gitea
 - OpenShift CLI (`oc`) access
 - Basic understanding of Python and REST APIs
+
+## Repository Migration Workflow
+
+Students begin by importing the workshop repository from GitHub into their personal Gitea account:
+
+1. **Login to Gitea** - Access the Gitea instance deployed on OpenShift
+2. **Create New Migration** - Use Gitea's migration feature to import from GitHub
+3. **Specify Source** - Point to `https://github.com/rhpds/private-summit-llmaas-showroom.git`
+4. **Complete Migration** - Wait for Gitea to clone and import the repository
+5. **Clone Locally** - Clone from personal Gitea repository to Dev Spaces workspace
+
+This workflow teaches students how to work with internal Git servers and migrate external repositories into private enterprise environments.
 
 ## Testing Locally
 
@@ -76,9 +92,22 @@ python app.py
 
 ## Deployment to OpenShift
 
-Students deploy using the provided manifests:
+Students must first update configuration files and push to Gitea, then deploy:
 
 ```bash
+# Update deployment.yaml and buildconfig.yaml with user-specific values
+# (namespace, AI model URL, Gitea repository URL)
+
+# Commit and push configuration changes
+git add exercises/05-code-development/openshift/
+git commit -m "Configure deployment"
+git push origin main
+
+# Commit completed application code
+git add exercises/05-code-development/app.py
+git commit -m "Complete task manager application"
+git push origin main
+
 # Create project
 oc new-project <username>-task-manager
 
@@ -136,8 +165,10 @@ The application expects an OpenAI-compatible chat completion API with this forma
 ## Common Issues
 
 ### Build Failures
-- Verify BuildConfig repository URL and branch
+- Verify BuildConfig repository URL points to personal Gitea repository
+- Ensure the Gitea URL is correct: `https://gitea.<domain>/<username>/private-summit-llmaas-showroom.git`
 - Check that `contextDir` points to `exercises/05-code-development`
+- Verify code was committed and pushed to Gitea before starting the build
 
 ### AI Integration Not Working
 - Verify `AI_MODEL_URL` environment variable in deployment.yaml
@@ -152,18 +183,24 @@ The application expects an OpenAI-compatible chat completion API with this forma
 ## Instructor Notes
 
 ### Time Estimate
-- Code completion: 30-40 minutes
+- Gitea login and repository migration from GitHub: 5-10 minutes
+- Clone repository to Dev Spaces: 2-3 minutes
+- Code completion with Continue.dev: 30-40 minutes
 - Testing and debugging: 10-15 minutes
-- Deployment: 15-20 minutes
-- **Total: 55-75 minutes**
+- Git commit/push workflow: 5 minutes
+- Deployment to OpenShift: 15-20 minutes
+- **Total: 67-93 minutes**
 
 ### Key Teaching Points
 
-1. **AI-Assisted Development**: Emphasize that Continue.dev is a productivity tool, not a replacement for understanding code
-2. **Prompt Engineering**: Show how clear, specific prompts yield better results
-3. **Code Review**: Students should always review and understand AI-generated code
-4. **Iteration**: Demonstrate refining prompts when initial results aren't perfect
-5. **Cloud-Native**: Highlight 12-factor app principles (environment config, stateless design, health checks)
+1. **Repository Migration**: Students learn to import external repositories into internal Git servers (common in enterprise environments)
+2. **Git Workflow**: Experience a realistic development workflow - migrate, clone, commit, push
+3. **AI-Assisted Development**: Emphasize that Continue.dev is a productivity tool, not a replacement for understanding code
+4. **Prompt Engineering**: Show how clear, specific prompts yield better results
+5. **Code Review**: Students should always review and understand AI-generated code
+6. **Iteration**: Demonstrate refining prompts when initial results aren't perfect
+7. **Cloud-Native**: Highlight 12-factor app principles (environment config, stateless design, health checks)
+8. **Source-to-Image**: Students see how OpenShift builds directly from Git repositories (S2I pattern)
 
 ### Assessment Criteria
 

@@ -20,6 +20,11 @@ asciidoc:
     minio-endpoint: http://minio.shared-minio.svc.cluster.local:9000/
     git-clone-repo-url: https://github.com/rhpds/private-summit-llmaas-showroom.git
     git-clone-repo-branch: main
+    gitea-console-url: https://gitea.{openshift_cluster_ingress_domain}
+    gitea-user: {user}
+    gitea-password: openshift
+    gitea-repo-name: private-summit-llmaas-showroom
+    gitea-repo-url: https://gitea.{openshift_cluster_ingress_domain}/{user}/private-summit-llmaas-showroom.git
     user: user1
     password: openshift
     openshift_api_url: https://api.cluster-guid.guid.sandbox.opentlc.com:6443
