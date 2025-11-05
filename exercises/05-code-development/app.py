@@ -19,6 +19,7 @@ task_counter = 1
 # AI Model Configuration
 AI_MODEL_URL = os.getenv('AI_MODEL_URL', 'http://localhost:8000/v1/chat/completions')
 AI_MODEL_NAME = os.getenv('AI_MODEL_NAME', 'granite-3.0-8b-instruct')
+AI_API_TOKEN = os.getenv('AI_API_TOKEN', '')
 
 
 @app.route('/')
@@ -141,14 +142,20 @@ def call_ai_model(prompt, max_tokens=500):
         Exception: If the API call fails
     """
     # TODO: Implement this function to call the AI model
-    # 1. Create the request payload with:
+    # 1. Create headers with Authorization token:
+    #    headers = {
+    #        "Content-Type": "application/json",
+    #        "Authorization": f"Bearer {AI_API_TOKEN}"
+    #    }
+    # 2. Create the request payload with:
     #    - model: AI_MODEL_NAME
     #    - messages: [{"role": "user", "content": prompt}]
     #    - max_tokens: max_tokens
     #    - temperature: 0.7
-    # 2. Make a POST request to AI_MODEL_URL
-    # 3. Extract and return the response text from: response.json()['choices'][0]['message']['content']
-    # 4. Handle connection errors and return appropriate error messages
+    # 3. Make a POST request to AI_MODEL_URL with headers and JSON payload
+    # 4. Extract and return the response text from: response.json()['choices'][0]['message']['content']
+    # 5. Handle connection errors and return appropriate error messages
+    # 6. Add timeout of 30 seconds to the request
     pass
 
 

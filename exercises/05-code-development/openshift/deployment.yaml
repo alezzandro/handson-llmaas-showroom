@@ -29,6 +29,8 @@ spec:
           value: "http://granite-instruct-vllm.ai-models.svc.cluster.local:8000/v1/chat/completions"
         - name: AI_MODEL_NAME
           value: "granite-3.0-8b-instruct"
+        - name: AI_API_TOKEN
+          value: "your-api-token-here"
         resources:
           limits:
             cpu: "500m"

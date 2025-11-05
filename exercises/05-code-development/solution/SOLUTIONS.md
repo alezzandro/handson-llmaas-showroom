@@ -172,6 +172,12 @@ def call_ai_model(prompt, max_tokens=500):
     Raises:
         Exception: If the API call fails
     """
+    # Create headers with Authorization token
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {AI_API_TOKEN}'
+    }
+
     # Create the request payload
     payload = {
         'model': AI_MODEL_NAME,
@@ -186,9 +192,10 @@ def call_ai_model(prompt, max_tokens=500):
     }
 
     try:
-        # Make POST request to AI model
+        # Make POST request to AI model with headers
         response = requests.post(
             AI_MODEL_URL,
+            headers=headers,
             json=payload,
             timeout=30
         )
@@ -203,6 +210,7 @@ def call_ai_model(prompt, max_tokens=500):
 ```
 
 **Key Points:**
+- Creates headers with Authorization Bearer token for API authentication
 - Follows OpenAI chat completion API format
 - Includes timeout to prevent hanging requests
 - Uses `raise_for_status()` to catch HTTP errors

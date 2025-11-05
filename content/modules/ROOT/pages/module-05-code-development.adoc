@@ -31,94 +31,21 @@ By the end, you'll have built and deployed a working application on OpenShift th
 
 == Step 1: Access Your Development Environment
 
-You should already have your OpenShift Dev Spaces environment running from the previous module with Continue.dev configured.
+You should already have your OpenShift Dev Spaces environment running from the previous module with Continue.dev configured and the workshop repository cloned.
 
 *  If you closed your workspace, navigate back to: https://devspaces.{openshift_cluster_ingress_domain}/[https://devspaces.{openshift_cluster_ingress_domain}/,window=_blank]
 
 * Open your existing workspace by clicking `Open`.
 
-Once inside VSCode, you're ready to start coding.
+Once inside VSCode, navigate to the exercise directory:
 
-== Step 2: Import the Workshop Repository to Gitea
+* Open a terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
 
-Your platform engineer has deployed a local Git server (Gitea) on OpenShift for your team. You'll import the workshop repository from GitHub into your personal Gitea account, where you can make changes and push your completed code.
-
-=== Login to Gitea
-
-* Open Gitea in a new browser tab: {gitea-console-url}[{gitea-console-url},window=_blank]
-
-* Click **Sign In** in the top-right corner
-
-* Log in with your credentials:
-** Username: `{user}`
-** Password: `{password}`
-+
-[.bordershadow]
-image::code/gitea_login.png[width="50%"]
-
-After logging in, you'll see your personal Gitea dashboard.
-
-=== Create a New Repository by Migrating from GitHub
-
-You'll import the workshop repository from GitHub into your Gitea instance.
-
-* Click the **+** icon in the top-right corner, then select **New Migration**
-+
-[.bordershadow]
-image::code/gitea_new_migration.png[width="50%"]
-
-* Select **GitHub** as the migration source
-
-* Fill in the migration form:
-** **Clone Address**: `{git-clone-repo-url}`
-** **Owner**: Select your username (`{user}`)
-** **Repository Name**: `private-summit-llmaas-showroom`
-** Leave other options at their defaults
-+
-[.bordershadow]
-image::code/gitea_migrate_form.png[width="50%"]
-
-* Click **Migrate Repository**
-
-* Wait for the migration to complete (this may take 30-60 seconds)
-
-* You now have your own copy of the repository in Gitea at: `{gitea-console-url}/{user}/private-summit-llmaas-showroom`
-+
-[.bordershadow]
-image::code/gitea_repo_view.png[width="75%"]
-
-=== Clone Your Migrated Repository to Dev Spaces
-
-Now let's get the code into your development environment.
-
-* Return to your **OpenShift Dev Spaces** workspace (VSCode in the browser)
-
-* Open a new terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
-
-* Configure Git with your identity (this is required for later commits):
-+
-[source,bash,role=execute,subs="attributes"]
-----
-git config --global user.name "{user}"
-git config --global user.email "{user}@example.com"
-----
-
-* Navigate to the projects directory and clone your forked repository:
-+
-[source,bash,role=execute,subs="attributes"]
-----
-cd /projects
-git clone {gitea-repo-url}
-cd private-summit-llmaas-showroom/exercises/05-code-development
-----
-+
-NOTE: If prompted for credentials, use your username (`{user}`) and password (`{password}`)
-
-* Verify the clone was successful:
+* Navigate to the exercise directory:
 +
 [source,bash]
 ----
-ls -la
+cd /projects/handson-llmaas-showroom/exercises/05-code-development
 ----
 
 * Open this directory in VSCode's file explorer. You should see:
@@ -138,11 +65,11 @@ ls -la
     └── service.yaml
 ----
 
-== Step 3: Review the Incomplete Code
+== Step 2: Review the Incomplete Code
 
 Before jumping into development, let's understand what's missing.
 
-* Open `app.py` in VSCode
+* Open `app.py` in the VSCode file explorer
 
 * Scroll through the file and notice the functions marked with `# TODO:` comments. These are the functions you need to implement:
 
@@ -156,41 +83,62 @@ Before jumping into development, let's understand what's missing.
 
 The good news? You have Continue.dev to help you complete these functions!
 
-== Step 4: Complete the Code with Continue.dev
+== Step 3: Complete the Code with Continue.dev
 
 Now comes the exciting part - using AI to complete your application. Let's work through each function systematically.
+
+**How to Use Continue for Code Completion:**
+
+Instead of letting Continue edit your code automatically, you'll use a more controlled approach:
+
+1. **Highlight** the entire function (including the `# TODO` comments)
+2. **Right-click** → **Continue** → **"Add to chat"**
+3. **Review** the code and explanation Continue provides in the chat window
+4. **Copy** the relevant code from the chat response
+5. **Paste** it into your actual code file, replacing the TODO section
+
+This approach gives you better control and helps you understand the code before adding it.
 
 === Function 1: Implementing `get_tasks()`
 
 This function should return all tasks sorted by creation date.
 
-* In `app.py`, locate the `get_tasks()` function (around line 23)
+* In `app.py`, locate the `get_tasks()` function (around line 31)
 
-* Highlight the entire function including the `# TODO` comment
+* **Highlight the entire function** from the `@app.route` decorator through the `pass` statement, including all the TODO comments
 
-* Open Continue.dev (click the Continue icon in the left sidebar or press `Ctrl+Shift+L`)
+* **Right-click** on the highlighted code → **Continue** → **"Add to chat"**
 
-* In the Continue chat, type:
+* In the Continue chat window that opens, type:
 +
 ----
 Complete this function to return all tasks sorted by creation date (newest first). Return as JSON.
+
+Remember: 'tasks' is a global list variable defined at the top of the file.
 ----
 
-* Review the generated code. It should:
+* Continue will generate the code in the chat window. **Review the generated code.** It should:
 ** Sort tasks by `created_at` in descending order
 ** Return tasks as JSON using `jsonify()`
+** Return status code 200
 
-* If the code looks correct, accept it by clicking the checkmark or pressing `Tab`
+* **Copy the implementation code** from the chat (the part inside the function body)
 
-* If you need refinements, ask Continue to adjust: "Add error handling" or "Make sure it returns status 200"
+* **Paste it into your `app.py` file**, replacing the TODO comments and `pass` statement
+
+* If you need refinements, continue chatting: "Add error handling" or "Make sure it returns status 200"
 
 === Function 2: Implementing `create_task()`
 
 This function creates a new task from JSON input.
 
-* Locate the `create_task()` function (around line 33)
+* Locate the `create_task()` function (around line 43)
 
-* Highlight the function and ask Continue:
+* **Highlight the entire function** from `@app.route` through `pass`
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to:
@@ -200,20 +148,30 @@ Complete this function to:
 4. Increment task_counter
 5. Add task to tasks list
 6. Return the created task with status 201
+
+Remember: 'tasks' is a global list variable and 'task_counter' is a global integer variable defined at the top of the file. You must declare 'global task_counter' at the beginning of the function to modify it.
 ----
 
-* Review the generated code carefully. Make sure it:
+* **Review the generated code** carefully. Make sure it:
 ** Uses `request.get_json()`
 ** Validates the title field
 ** Uses the global `task_counter` variable (includes `global task_counter` declaration)
 ** Creates a task dictionary with all required fields
 ** Returns with status code 201
 
-* Accept the code if correct, or iterate with Continue until it's right
+* **Copy and paste** the implementation into your `app.py` file
+
+* If needed, iterate with Continue in the chat until it's right
 
 === Function 3: Implementing `update_task()`
 
-* Locate `update_task()` and ask Continue:
+* Locate the `update_task()` function (around line 57)
+
+* **Highlight the entire function** from `@app.route` through `pass`
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to:
@@ -221,45 +179,79 @@ Complete this function to:
 2. Update only the fields that are provided in the request JSON (title, description, status, priority)
 3. Return the updated task as JSON
 4. Return 404 with error message if task not found
+
+Remember: 'tasks' is a global list variable defined at the top of the file. You need to iterate through it to find the task with matching task_id.
 ----
 
-* Verify the implementation handles partial updates correctly
+* **Review the code** and verify the implementation handles partial updates correctly
+
+* **Copy and paste** the implementation into your `app.py` file
 
 === Function 4: Implementing `delete_task()`
 
-* Locate `delete_task()` and ask Continue:
+* Locate the `delete_task()` function (around line 71)
+
+* **Highlight the entire function** from `@app.route` through `pass` (note: the `global tasks` line is already there)
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to:
 1. Find and remove the task from the tasks list by task_id
 2. Return success message with status 200
 3. Return 404 if task not found
-Remember to use 'global tasks'
+
+Remember: 'tasks' is a global list variable defined at the top of the file. The 'global tasks' declaration is already in the function, so you can directly modify the list.
 ----
+
+* **Review the code** in the chat
+
+* **Copy and paste** the implementation into your `app.py` file
 
 === Function 5: Implementing `call_ai_model()`
 
 This is a critical function that interfaces with your AI model. Let's be very specific.
 
-* Locate `call_ai_model()` and ask Continue:
+* Locate the `call_ai_model()` function (around line 129)
+
+* **Highlight the entire function** from `def call_ai_model` through `pass`, including all the docstring and TODO comments
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to call an OpenAI-compatible chat API:
-1. Create payload with: model=AI_MODEL_NAME, messages=[{"role":"user","content":prompt}], max_tokens=max_tokens, temperature=0.7
-2. Make POST request to AI_MODEL_URL with JSON payload
-3. Extract response from response.json()['choices'][0]['message']['content']
-4. Handle requests.exceptions.RequestException and return error message
-5. Add timeout of 30 seconds to the request
+1. Get AI_API_TOKEN from environment variables (os.environ.get('AI_API_TOKEN'))
+2. Create headers with: {"Content-Type": "application/json", "Authorization": f"Bearer {api_token}"}
+3. Create payload with: model=AI_MODEL_NAME, messages=[{"role":"user","content":prompt}], max_tokens=max_tokens, temperature=0.7
+4. Make POST request to AI_MODEL_URL with JSON payload and headers
+5. Extract response from response.json()['choices'][0]['message']['content']
+6. Handle requests.exceptions.RequestException and return error message
+7. Add timeout of 30 seconds to the request
+
+Remember: AI_MODEL_URL, AI_MODEL_NAME, and AI_API_TOKEN are global configuration variables defined at the top of the file. Use them directly in this function.
 ----
 
-* This is crucial - review carefully to ensure:
+* **This is crucial - review carefully** to ensure:
+** The request includes the Authorization header with the API token
 ** The request payload matches OpenAI's chat completion format
 ** Error handling is robust
 ** The function extracts the content correctly
 
+* **Copy and paste** the implementation into your `app.py` file
+
 === Function 6: Implementing `suggest_improvements()`
 
-* Locate `suggest_improvements()` and ask Continue:
+* Locate the `suggest_improvements()` function (around line 86)
+
+* **Highlight the entire function** from `@app.route` through `pass`, including the task-finding logic that's already there
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to:
@@ -267,13 +259,25 @@ Complete this function to:
 2. Call call_ai_model() with the prompt
 3. Return JSON with 'suggestions' field containing the AI response
 4. Handle any errors from call_ai_model() and return appropriate error response
+
+Note: The task-finding logic is already implemented in the function (it searches through the 'tasks' global list). You only need to complete the TODO section for creating the prompt and calling the AI.
 ----
+
+* **Review the code** and ensure it properly calls the `call_ai_model()` function
+
+* **Copy and paste** the implementation into your `app.py` file
 
 === Function 7: Implementing `analyze_tasks()`
 
 The final function brings everything together.
 
-* Locate `analyze_tasks()` and ask Continue:
+* Locate the `analyze_tasks()` function (around line 111)
+
+* **Highlight the entire function** from `@app.route` through `pass`, including all TODO comments
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
 +
 ----
 Complete this function to:
@@ -286,9 +290,17 @@ Complete this function to:
 4. Call call_ai_model() with the prompt
 5. Return JSON with 'analysis' field
 6. Handle errors appropriately
+
+Remember: 'tasks' is a global list variable defined at the top of the file. You need to iterate through it to build a formatted task list for the AI prompt.
 ----
 
-== Step 5: Test Your Code Locally
+* **Review the code** to ensure it handles all three analysis types correctly
+
+* **Copy and paste** the implementation into your `app.py` file
+
+Congratulations! You've now completed all the functions using Continue.dev!
+
+== Step 4: Test Your Code Locally
 
 Before deploying to OpenShift, let's test locally in your Dev Spaces environment.
 
@@ -296,7 +308,7 @@ Before deploying to OpenShift, let's test locally in your Dev Spaces environment
 +
 [source,bash]
 ----
-cd /projects/private-summit-llmaas-showroom/exercises/05-code-development
+cd /projects/handson-llmaas-showroom/exercises/05-code-development
 ----
 
 * Install dependencies:
@@ -312,14 +324,17 @@ pip install -r requirements.txt
 ----
 export AI_MODEL_URL="http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
 export AI_MODEL_NAME="granite-3.0-8b-instruct"
+export AI_API_TOKEN="your-api-token-here"
 export PORT=8080
 ----
++
+NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform (the same token you used in the Continue configuration in Module 2.1)
 
 * Run the application:
 +
 [source,bash]
 ----
-python app.py
+python3.11 app.py
 ----
 
 * You should see output like:
@@ -344,7 +359,7 @@ python app.py
 
 * Once everything works, stop the application with `Ctrl+C`
 
-== Step 6: Prepare for OpenShift Deployment
+== Step 5: Prepare for OpenShift Deployment
 
 Now let's get your application ready to deploy on OpenShift.
 
@@ -365,13 +380,19 @@ oc new-project {user}-task-manager
 image: image-registry.openshift-image-registry.svc:5000/{user}-task-manager/task-manager:latest
 ----
 
-* Also update the AI model URL in the `env` section (around line 23). Replace it with:
+* Also update the AI model configuration in the `env` section (around line 23). Replace it with:
 +
 [source,yaml,subs="attributes"]
 ----
 - name: AI_MODEL_URL
   value: "http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
+- name: AI_MODEL_NAME
+  value: "granite-3.0-8b-instruct"
+- name: AI_API_TOKEN
+  value: "your-api-token-here"
 ----
++
+NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform
 
 * Save the file
 
@@ -392,7 +413,7 @@ This tells OpenShift to build from your personal Gitea repository instead of the
 +
 [source,bash,subs="attributes"]
 ----
-cd /projects/private-summit-llmaas-showroom
+cd /projects/handson-llmaas-showroom
 git add exercises/05-code-development/openshift/deployment.yaml
 git add exercises/05-code-development/openshift/buildconfig.yaml
 git commit -m "Configure deployment for {user}"
@@ -401,7 +422,7 @@ git push origin main
 +
 NOTE: If prompted for credentials during push, use your username (`{user}`) and password (`{password}`)
 
-== Step 7: Commit Your Completed Code
+== Step 6: Commit Your Completed Code
 
 Before deploying to OpenShift, you need to commit and push your completed application code to your Gitea repository. This ensures OpenShift builds the latest version of your code.
 
@@ -409,7 +430,7 @@ Before deploying to OpenShift, you need to commit and push your completed applic
 +
 [source,bash]
 ----
-cd /projects/private-summit-llmaas-showroom
+cd /projects/handson-llmaas-showroom
 ----
 
 * Check which files you've modified:
@@ -442,7 +463,7 @@ NOTE: If prompted for credentials, use your username (`{user}`) and password (`{
 
 Now your completed application is ready to be built and deployed!
 
-== Step 8: Build and Deploy to OpenShift
+== Step 7: Build and Deploy to OpenShift
 
 With your code complete, tested, and pushed to Gitea, it's time to deploy!
 
@@ -526,7 +547,7 @@ oc get route task-manager -o jsonpath='{.spec.host}'
 
 Copy this URL and open it in your browser!
 
-== Step 9: Test Your Deployed Application
+== Step 8: Test Your Deployed Application
 
 Your AI-powered task manager is now live on OpenShift!
 
@@ -547,7 +568,7 @@ Your AI-powered task manager is now live on OpenShift!
 
 * Mark some tasks as completed and observe how the UI updates
 
-== Step 10: Review the OpenShift Console
+== Step 9: Review the OpenShift Console
 
 Let's see your application from the platform perspective.
 
@@ -572,7 +593,7 @@ You should see:
 
 * Click **View logs** on your pod to see the application logs in real-time
 
-== Step 11: Understanding the Architecture
+== Step 10: Understanding the Architecture
 
 Let's reflect on what you've built and how it works:
 
@@ -673,15 +694,18 @@ Make the application more robust.
 === AI Suggestions Don't Work
 
 * Verify the AI model service is accessible from your namespace
-* Check the `AI_MODEL_URL` environment variable
+* Check the `AI_MODEL_URL` and `AI_API_TOKEN` environment variables
 * Test the model endpoint directly:
 +
 [source,bash,subs="attributes"]
 ----
 oc exec deployment/task-manager -- curl -X POST http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
   -d '{"model":"granite-3.0-8b-instruct","messages":[{"role":"user","content":"Hello"}],"max_tokens":50}'
 ----
++
+NOTE: Replace `YOUR_API_TOKEN` with your actual API token
 
 === Build Failures
 

@@ -37,27 +37,124 @@ Your platform engineer has provided you a direct URL to the Dev Spaces console t
 
 *  Navigate to console: https://devspaces.{openshift_cluster_ingress_domain}/[https://devspaces.apps.{openshift_cluster_ingress_domain}]
 
-We have a VSCode workspace ready for your use, with the required dependencies. As a developer, you can also create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces). 
+As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
 
 * Open the `Workspaces` tab:
 
 image::code/workspaces-tab.png[width="50%"]
 
-*  Launch the pre-created workspace by clicking `Open`. You may need to wait a moment for the workspace to be ready.
+*  Create a new workspace by selecting **Blank Workspace** from the catalog list. You may need to wait a moment for the workspace to be ready.
 
 image::code/workspace_preset.png[width="50%"]
 
-After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise! 
+After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise!
 
 image::code/vscode_trust.png[width="50%"]
 
-Inside your workspace, you'll find a cloned GitHub repository. This is where you will build and refine. The only thing we need to configure is our code extension.
+Now that your workspace is ready, let's set up your code repository.
 
-image::code/file_explorer_repo.png[width="50%"]
+== Step 2: Import the Workshop Repository to Gitea
 
-Before we dive into the code, let's meet **Continue**.
+Your platform engineer has deployed a local Git server (Gitea) on OpenShift for your team. You'll import the workshop repository from GitHub into your personal Gitea account, where you can make changes and push your code.
 
-== Step 2: Add Continue, Your Coding Teammate
+=== Login to Gitea
+
+* Open Gitea in a new browser tab: {gitea-console-url}[{gitea-console-url},window=_blank]
+
+* Click **Sign In** in the top-right corner
+
+* Log in with your credentials:
+** Username: `{user}`
+** Password: `{password}`
++
+[.bordershadow]
+image::code/gitea_login.png[width="50%"]
+
+After logging in, you'll see your personal Gitea dashboard.
+
+=== Create a New Repository by Migrating from GitHub
+
+You'll import the workshop repository from GitHub into your Gitea instance.
+
+* Click the **+** icon in the top-right corner, then select **New Migration**
++
+[.bordershadow]
+image::code/gitea_new_migration.png[width="50%"]
+
+* Select **GitHub** as the migration source
+
+* Fill in the migration form:
+** **Clone Address**: `{git-clone-repo-url}`
+** **Owner**: Select your username (`{user}`)
+** **Repository Name**: `handson-llmaas-showroom`
+** Leave other options at their defaults
++
+[.bordershadow]
+image::code/gitea_migrate_form.png[width="50%"]
+
+* Click **Migrate Repository**
+
+* Wait for the migration to complete (this may take 30-60 seconds)
+
+* You now have your own copy of the repository in Gitea at: `{gitea-console-url}/{user}/handson-llmaas-showroom`
++
+[.bordershadow]
+image::code/gitea_repo_view.png[width="75%"]
+
+=== Clone Your Migrated Repository to Dev Spaces
+
+Now let's get the code into your development environment.
+
+* Return to your **OpenShift Dev Spaces** workspace (VSCode in the browser)
+
+* Open a new terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
+
+* Configure Git with your identity (this is required for later commits):
++
+[source,bash,role=execute,subs="attributes"]
+----
+git config --global user.name "{user}"
+git config --global user.email "{user}@example.com"
+----
+
+* Navigate to the projects directory and clone your forked repository:
++
+[source,bash,role=execute,subs="attributes"]
+----
+cd /projects
+git clone {gitea-repo-url}
+cd handson-llmaas-showroom/exercises/05-code-development
+----
++
+NOTE: If prompted for credentials, use your username (`{user}`) and password (`{password}`)
+
+* Verify the clone was successful:
++
+[source,bash]
+----
+ls -la
+----
+
+* Open this directory in VSCode's file explorer. You should see:
++
+----
+05-code-development/
+├── app.py                 # Main Flask application (incomplete)
+├── requirements.txt       # Python dependencies
+├── templates/
+│   └── index.html        # Frontend UI (complete)
+├── Dockerfile            # Container configuration
+└── openshift/            # Kubernetes manifests
+    ├── buildconfig.yaml
+    ├── deployment.yaml
+    ├── imagestream.yaml
+    ├── route.yaml
+    └── service.yaml
+----
+
+Your repository is now ready in your development environment. Before we dive into the code, let's meet **Continue**.
+
+== Step 3: Add Continue, Your Coding Teammate
 
 **Continue** is an open-source AI code assistant that integrates seamlessly into VS Code. Unlike traditional code completion tools, Continue provides an interactive chat interface where you can have natural conversations about your code. You can ask Continue to perform actions like:
 
@@ -83,29 +180,17 @@ In the search bar, search for **Continue**.
 
 image::code/continue.png[width="50%"]
 
-Click on the arrow next to **Install Pre-Release** and instead select **Install Release Version** on the Continue extension.
+Click **Install** to install the latest stable release of the Continue extension.
 
-image::code/install_release_version.png[width="50%"]
-
-You will get a trust verification message. Select **Trust Publisher & Install**.
+You may get a trust verification message. If prompted, select **Trust Publisher & Install**.
 
 image::code/trust_continue.png[width="50%"]
 
-Once installed, click on the arrow next to `Uninstall -> Install Specific Version` as seen below. We are going to select a specific version to install since things move so quickly around here!
-
-Click **Install Specific Version...**
-
-image::code/install_specific_version.png[width="50%"]
-
-You will see a drop-down appear with different versions. Please select **v1.0.21**.
-
-Once installed, select "Reload Window" to restart the extension.
-
-image::code/reload_window.png[width="50%"]
+Once installed, the extension will be ready to use. You may need to reload the window if prompted.
 
 You've now installed Continue - next, let's connect it to your private LLM.
 
-== Step 3: Connect Continue to Your Granite Model
+== Step 4: Connect Continue to Your Granite Model
 
 Navigate to the **Continue sidebar icon** in the left-hand side navigation panel:
 
@@ -168,8 +253,9 @@ Go ahead - test it out and chat a bit!
 
 You've now:
 
-* Set up a cloud IDE
+* Set up a cloud IDE with OpenShift Dev Spaces
+* Imported and cloned your workshop repository from Gitea
 * Installed Continue and configured it to connect to your private Granite model
 * Set up an AI assistant that can refactor, edit and explain your code!
 
-Next, you will use Continue to help you develop a little fun game to get warmed up. 
+Next, you will use Continue to help you develop applications with AI assistance. 
