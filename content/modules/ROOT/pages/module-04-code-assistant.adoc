@@ -39,13 +39,9 @@ Your platform engineer has provided you a direct URL to the Dev Spaces console t
 
 As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
 
-* Open the `Workspaces` tab:
+*  Create a new workspace by clicking **Create Workspace** and then selecting **Empty Workspace** from the catalog list. You may need to wait a moment for the workspace to be ready.
 
-image::code/workspaces-tab.png[width="50%"]
-
-*  Create a new workspace by selecting **Blank Workspace** from the catalog list. You may need to wait a moment for the workspace to be ready.
-
-image::code/workspace_preset.png[width="50%"]
+image::new/create-workspace.png[width="50%"]
 
 After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise!
 
@@ -68,7 +64,7 @@ Your platform engineer has deployed a local Git server (Gitea) on OpenShift for 
 ** Password: `{password}`
 +
 [.bordershadow]
-image::code/gitea_login.png[width="50%"]
+
 
 After logging in, you'll see your personal Gitea dashboard.
 
@@ -79,18 +75,21 @@ You'll import the workshop repository from GitHub into your Gitea instance.
 * Click the **+** icon in the top-right corner, then select **New Migration**
 +
 [.bordershadow]
-image::code/gitea_new_migration.png[width="50%"]
+image::new/gitea-new-migration.png[width="50%"]
 
-* Select **GitHub** as the migration source
+* Select **Git** as the migration source
+[.bordershadow]
+image::new/gitea-migration-git.png[width="50%"]
 
 * Fill in the migration form:
 ** **Clone Address**: `{git-clone-repo-url}`
 ** **Owner**: Select your username (`{user}`)
 ** **Repository Name**: `handson-llmaas-showroom`
 ** Leave other options at their defaults
-+
+
 [.bordershadow]
-image::code/gitea_migrate_form.png[width="50%"]
+image::new/gitea-migration-form.png[width="50%"]
+
 
 * Click **Migrate Repository**
 
@@ -99,7 +98,7 @@ image::code/gitea_migrate_form.png[width="50%"]
 * You now have your own copy of the repository in Gitea at: `{gitea-console-url}/{user}/handson-llmaas-showroom`
 +
 [.bordershadow]
-image::code/gitea_repo_view.png[width="75%"]
+image::new/gitea-git-migrated.png[width="75%"]
 
 === Clone Your Migrated Repository to Dev Spaces
 
@@ -178,7 +177,7 @@ image::code/extensions_tab.png[width=100%]
 
 In the search bar, search for **Continue**.
 
-image::code/continue.png[width="50%"]
+image::new/continue-extension-marketplace.png[width="50%"]
 
 Click **Install** to install the latest stable release of the Continue extension.
 
@@ -207,9 +206,9 @@ NOTE: If needed, go back to the developer portal and the application created in 
 
 === Enter Connection Details
 
-Click on `Select Model` and then the small settings icon in the **Models** pop up.
+Click on `Local Config` and then the small settings icon in the **Local Config** pop up.
 
-image::code/open_config.png[width="50%"]
+image::new/continue-click-config-option-button.png[width="50%"]
 
 This will open the `config.yaml` file. Delete the file contents and replace with the following:
 
@@ -240,6 +239,7 @@ For example:
 
 * **apiBase**: `https://granite-model-maas.apps.example.com:443/v1` (Ensure you retain the `v1` at the end of the URL)
 * **apiKey**: `your-actual-api-key-here`
+* **model**: `the model name`
 
 Reference the complete configuration documentation here: https://docs.continue.dev/reference[Continue Documentation]
 
