@@ -363,24 +363,27 @@ python3.11 app.py
 
 Now let's get your application ready to deploy on OpenShift.
 
-* First, create a new project (namespace) for your application in OpenShift. In the terminal:
+* First, open a terminal in your OpenShift Dev Spaces workspace. The workspace terminal comes pre-configured with OpenShift CLI (`oc`) and is automatically logged into your OpenShift cluster, so you don't need to run `oc login`.
+
+* To open a terminal in Dev Spaces:
++
+1. In the top menu bar, click on **Terminal**
+2. Select **New Terminal**
++
+image::05/05-devspaces-new-terminal.png[width="50%"]
++
+TIP: The Dev Spaces workspace is already authenticated with OpenShift using your credentials, so you can immediately start using `oc` commands.
+
+* Now create a new project (namespace) for your application. In the terminal:
 +
 [source,bash,subs="attributes"]
 ----
-oc login --insecure-skip-tls-verify=true -u {user} -p {password} {openshift_api_url}
 oc new-project {user}-task-manager
 ----
 
-* Update the deployment configuration with your namespace. Open `openshift/deployment.yaml` in VSCode
+* Update the deployment configuration with your AI model details. Open `openshift/deployment.yaml` in VSCode
 
-* Find the line with `image:` (around line 17) and replace `NAMESPACE` with `{user}-task-manager`:
-+
-[source,yaml,subs="attributes"]
-----
-image: image-registry.openshift-image-registry.svc:5000/{user}-task-manager/task-manager:latest
-----
-
-* Also update the AI model configuration in the `env` section (around line 23). Replace it with:
+* Find the AI model configuration in the `env` section (around line 28) and update it with your namespace:
 +
 [source,yaml,subs="attributes"]
 ----
@@ -392,7 +395,7 @@ image: image-registry.openshift-image-registry.svc:5000/{user}-task-manager/task
   value: "your-api-token-here"
 ----
 +
-NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform
+NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform. The deployment already references the image stream, so no namespace changes are needed for the image.
 
 * Save the file
 
@@ -485,18 +488,16 @@ This tells OpenShift how to build your container image from source.
 oc apply -f openshift/buildconfig.yaml
 ----
 
-=== Start the Build
-
-Trigger a build from your Gitea repository:
+The BuildConfig will automatically trigger a build when created. You can monitor the build progress:
 
 [source,bash]
 ----
-oc start-build task-manager --follow
+oc logs -f bc/task-manager
 ----
 
-This will:
+This build will:
 
-* Clone the repository
+* Clone your code from the Gitea repository
 * Build a container image using your Dockerfile
 * Push the image to OpenShift's internal registry
 
@@ -721,6 +722,6 @@ You've successfully built and deployed an AI-powered application on OpenShift! Y
 * Full-stack application development with AI integration
 * Modern DevOps practices with OpenShift
 
-In the next modules, you'll explore even more advanced AI capabilities, including agentic AI systems that can perform complex multi-step tasks.
+In the next module, you'll explore **Parasol AI Studio** - a specialized platform that makes enterprise AI accessible to everyone by eliminating the complexity of model configuration and deployment. You'll see how Parasol AI Studio transforms the AI application experience through automatic provisioning, seamless integration, and one-click access to powerful AI workbenches.
 
 Your task manager is just the beginning - imagine what else you can build with these tools!

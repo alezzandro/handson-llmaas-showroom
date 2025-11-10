@@ -17,7 +17,6 @@ You moved between multiple roles today:
 
 * **Platform engineer** - deploying, exposing, and governing AI services through MaaS infrastructure.
 * **Developer** - integrating LLMs into code workflows and building intelligent apps
-* **Site Reliability Engineer or DevOps** - enhancing and improving operational insight with agentic tools like MCP and LlamaStack
 * **Stakeholder / Decision Maker** - leveraging analytics to track usage, optimize cost, and plan for growth.
 
 == What's Next?
@@ -27,8 +26,6 @@ You moved between multiple roles today:
 * https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/latest[OpenShift AI Documentation]
 * https://developers.redhat.com/products/openshift-dev-spaces/overview[Try Red Hat OpenShift Dev Spaces]
 * https://github.com/continuedev/continue[Continue GitHub Repository]
-* https://llama-stack.readthedocs.io/en/latest/[LlamaStack Documentation]
-* https://modelcontextprotocol.io/overview[Model Context Protocol (MCP)]
 
 
 

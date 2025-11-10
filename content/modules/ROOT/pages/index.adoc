@@ -27,13 +27,16 @@ Step into the role of platform engineer. You will see how to provision a scalabl
 === **Module 2:** Activate the Code Assistant and Use AI to Enhance your Coding Skills
 Now, shift to the app developer's perspective. Connect to the model endpoint you deployed and then integrate it into a developer facing code assistant to help you develop for your work, bridging infrastructure and app logic.
 
-=== **Module 3:** Leverage the power of Agentic AI tooling
-With the mindset of a site reliability engineer, you'll use model context protocol (mcp) and the LlamaStack API to interact more easily with your openshift cluster.
+=== **Module 3:** Exploring Parasol AI Studio
+Experience how enterprise AI can be made accessible to everyone through Parasol AI Studio - a specialized platform that eliminates the complexity of AI configuration. Discover automatic provisioning, seamless MaaS integration, and one-click access to powerful AI workbenches including chatbots, document processing, code assistants, and image generation.
 
-=== **Module 4:** Analytics
-Take on the role of a platform SRE or product owner responsible for understanding how your private LLM is being used, and whether it's operating effectively at scale by exploring model usage analytics. 
+=== **Module 4:** Deploying a CPU-Optimized Model
+Return to the platform engineer role and deploy a compact language model using CPU-only resources. Learn how to use custom vLLM runtimes optimized for CPU execution, understand the trade-offs between GPU and CPU deployments, and explore cost-effective strategies for running AI workloads at scale without GPU requirements.
 
-=== **Module 5:** Reflect and Wrap-Up
+=== **Module 5:** Analytics
+Take on the role of a platform SRE or product owner responsible for understanding how your private LLM is being used, and whether it's operating effectively at scale by exploring model usage analytics.
+
+=== **Module 6:** Reflect and Wrap-Up
 Assess what you've built. We'll close with key takeaways, architectural guidance, and patterns you can bring back to your organization.
 
 == Workshop Environment
