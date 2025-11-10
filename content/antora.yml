@@ -18,13 +18,6 @@ asciidoc:
     minio-user: minio
     minio-pass: minio123
     minio-endpoint: http://minio.shared-minio.svc.cluster.local:9000/
-    git-clone-repo-url: https://github.com/alezzandro/handson-llmaas-showroom.git
-    git-clone-repo-branch: main
-    gitea-console-url: https://gitea.{openshift_cluster_ingress_domain}
-    gitea-user: {user}
-    gitea-password: openshift
-    gitea-repo-name: handson-llmaas-showroom
-    gitea-repo-url: https://gitea.{openshift_cluster_ingress_domain}/{user}/handson-llmaas-showroom.git
     user: user1
     password: openshift
     openshift_api_url: https://api.cluster-guid.guid.sandbox.opentlc.com:6443
@@ -34,6 +27,13 @@ asciidoc:
     openshift_cluster_admin_password: password
     rhoai_dashboard_url: https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/
     login_command: oc login --insecure-skip-tls-verify=false -u userX -p openshift https://api.MYCLUSTER.com:6443"
+        git-clone-repo-url: https://github.com/alezzandro/handson-llmaas-showroom.git
+    git-clone-repo-branch: main
+    gitea-console-url: https://gitea.{openshift_cluster_ingress_domain}
+    gitea-user: {user}
+    gitea-password: openshift
+    gitea-repo-name: handson-llmaas-showroom
+    gitea-repo-url: https://gitea.{openshift_cluster_ingress_domain}/{user}/handson-llmaas-showroom.git
     rhoai: "Red Hat OpenShift AI"
     rhoai-short: "RHOAI"
     ocp: "OpenShift Container Platform"
