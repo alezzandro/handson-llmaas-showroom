@@ -323,7 +323,7 @@ pip install -r requirements.txt
 [source,bash,subs="attributes"]
 ----
 export AI_MODEL_URL="http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
-export AI_MODEL_NAME="granite-3.0-8b-instruct"
+export AI_MODEL_NAME="granite-3.3-8b-instruct"
 export AI_API_TOKEN="your-api-token-here"
 export PORT=8080
 ----
@@ -390,7 +390,7 @@ oc new-project {user}-task-manager
 - name: AI_MODEL_URL
   value: "http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
 - name: AI_MODEL_NAME
-  value: "granite-3.0-8b-instruct"
+  value: "granite-3.3-8b-instruct"
 - name: AI_API_TOKEN
   value: "your-api-token-here"
 ----
@@ -703,7 +703,7 @@ Make the application more robust.
 oc exec deployment/task-manager -- curl -X POST http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
-  -d '{"model":"granite-3.0-8b-instruct","messages":[{"role":"user","content":"Hello"}],"max_tokens":50}'
+  -d '{"model":"granite-3.3-8b-instruct","messages":[{"role":"user","content":"Hello"}],"max_tokens":50}'
 ----
 +
 NOTE: Replace `YOUR_API_TOKEN` with your actual API token

@@ -29,7 +29,7 @@ asciidoc:
     login_command: oc login --insecure-skip-tls-verify=false -u userX -p openshift https://api.MYCLUSTER.com:6443"
     git-clone-repo-url: https://github.com/alezzandro/handson-llmaas-showroom.git
     git-clone-repo-branch: main
-    gitea-console-url: https://gitea.{openshift_cluster_ingress_domain}
+    gitea-console-url: https://gitea-gitea.{openshift_cluster_ingress_domain}
     gitea-user: {user}
     gitea-password: openshift
     gitea-repo-name: handson-llmaas-showroom

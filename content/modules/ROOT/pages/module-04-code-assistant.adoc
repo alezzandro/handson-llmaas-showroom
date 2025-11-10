@@ -250,7 +250,7 @@ For example:
 
 Reference the complete configuration documentation here: https://docs.continue.dev/reference[Continue Documentation]
 
-When the model is properly configured, you will see the model name, `Granite-3.2-8b-instruct` in the Continue chat sidebar.
+When the model is properly configured, you will see the model name, `Granite-3.3-8b-instruct` in the Continue chat sidebar.
 
 image::code/model_dropdown.png[width="50%"]
 
