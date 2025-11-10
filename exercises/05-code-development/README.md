@@ -67,7 +67,7 @@ Students begin by importing the workshop repository from GitHub into their perso
 
 1. **Login to Gitea** - Access the Gitea instance deployed on OpenShift
 2. **Create New Migration** - Use Gitea's migration feature to import from GitHub
-3. **Specify Source** - Point to `https://github.com/rhpds/private-summit-llmaas-showroom.git`
+3. **Specify Source** - Point to `https://github.com/alezzandro/handson-llmaas-showroom.git`
 4. **Complete Migration** - Wait for Gitea to clone and import the repository
 5. **Clone Locally** - Clone from personal Gitea repository to Dev Spaces workspace
 
@@ -114,7 +114,11 @@ oc new-project <username>-task-manager
 # Deploy resources
 oc apply -f openshift/imagestream.yaml
 oc apply -f openshift/buildconfig.yaml
-oc start-build task-manager --follow
+
+# Monitor the build (automatically triggered by buildconfig creation)
+oc logs -f bc/task-manager
+
+# After build completes, deploy the application
 oc apply -f openshift/deployment.yaml
 oc apply -f openshift/service.yaml
 oc apply -f openshift/route.yaml
@@ -166,7 +170,7 @@ The application expects an OpenAI-compatible chat completion API with this forma
 
 ### Build Failures
 - Verify BuildConfig repository URL points to personal Gitea repository
-- Ensure the Gitea URL is correct: `https://gitea.<domain>/<username>/private-summit-llmaas-showroom.git`
+- Ensure the Gitea URL is correct: `https://gitea.<domain>/<username>/handson-llmaas-showroom.git`
 - Check that `contextDir` points to `exercises/05-code-development`
 - Verify code was committed and pushed to Gitea before starting the build
 

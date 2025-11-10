@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: task-manager
-        image: image-registry.openshift-image-registry.svc:5000/NAMESPACE/task-manager:latest
+        image: task-manager:latest
         ports:
         - containerPort: 8080
           protocol: TCP

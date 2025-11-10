@@ -14,7 +14,7 @@ spec:
   source:
     type: Git
     git:
-      uri: https://gitea.INGRESS_DOMAIN/USERNAME/private-summit-llmaas-showroom.git
+      uri: https://gitea.INGRESS_DOMAIN/USERNAME/handson-llmaas-showroom.git
       ref: main
     contextDir: exercises/05-code-development
   strategy:
