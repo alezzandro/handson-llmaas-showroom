@@ -32,4 +32,4 @@ https://maas.{openshift_cluster_ingress_domain}/[https://maas.{openshift_cluster
 
 == Parasol AI Studio
 
-https://parasol-ai-studio.{openshift_cluster_ingress_domain}/[https://parasol-ai-studio.{openshift_cluster_ingress_domain}/,window=_blank]
+{parasol_ai_studio_url}[{parasol_ai_studio_url},window=_blank]

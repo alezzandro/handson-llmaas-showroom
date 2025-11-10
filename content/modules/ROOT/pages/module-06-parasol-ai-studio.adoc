@@ -264,6 +264,30 @@ In this lab, you have the opportunity to experience firsthand how easy it can be
 
 image::parasol-conclusion.png[Parasol AI Studio - Making AI Accessible]
 
+== Try It Yourself!
+
+Now it's your turn to experience Parasol AI Studio firsthand. The platform has been deployed in your workshop environment and is ready for you to explore.
+
+* Access Parasol AI Studio: {parasol_ai_studio_url}[{parasol_ai_studio_url},window=_blank]
+
+* Log in with your credentials:
+** Username: `{user}`
+** Password: `{password}`
+
+Once logged in, you can:
+
+* **Explore Available Workbenches**: Browse the catalog of pre-configured AI applications
+* **Create a Workbench**: Launch one of the available AI applications (AnythingLLM, Docling Serve, Code Server with Continue.dev, or Stable Diffusion XL Studio)
+* **Test AI Capabilities**: Upload documents, ask questions, generate code, or create images
+* **Observe the Simplicity**: Notice how you didn't need to configure API endpoints, manage credentials, or set up infrastructure
+
+[.bordershadow]
+image::parasol-try-yourself.png[Try Parasol AI Studio,width=75%]
+
+TIP: When creating a workbench, the platform automatically provisions your MaaS credentials and configures all model endpoints. The entire process takes just a few clicks!
+
+Take a few minutes to experiment with the platform. This hands-on experience will help you understand how Parasol AI Studio democratizes access to AI capabilities across your organization.
+
 == What's Next?
 
 You've explored pre-configured AI applications through Parasol AI Studio. In the next module, you'll return to the platform engineer role to deploy a **CPU-optimized language model** using a custom vLLM runtime. You'll learn how to deploy models without GPU resources, understand the trade-offs between GPU and CPU deployments, and explore cost-effective strategies for running AI workloads on OpenShift.

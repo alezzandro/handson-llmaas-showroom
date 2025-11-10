@@ -51,4 +51,5 @@ asciidoc:
     page-links: links
     page-rhoai_dashboard_url: "https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/"
     page-openshift_cluster_console_url: "https://console-openshift-console.{openshift_cluster_ingress_domain}"
+    parasol_ai_studio_url: "https://my-ai-studio-redhat-ods-applications.{openshift_cluster_ingress_domain}"
     imagesdir: ../assets/images
