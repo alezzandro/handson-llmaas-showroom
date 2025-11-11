@@ -33,16 +33,19 @@ image::03/03-3scale-admin-dashboard.png[width="50%"]
 In the dropdown menu at the top you could explore these sections:
 
 * **Audience**: this gives you information about the users, registrations, etc.
-* **Products**: this is where you can create the Products that people will have access to. You can see there are two products already created: `granite-3dot2-8b-instruct`, which is connected to the model that was pre-deployed,  and `API`, which is a default 3Scale echo API for testing.
-* **Backends**: this is where you can see the backends that can be used by your products. You can see that the `granite-3dot2-8b-instruct` backend that is used by the `granite-3dot2-8b-instruct` product. The `backend` in this case is simply the model source. 
-
+* **Products**: this is where you can create the Products that people will have access to. You can see there are four products already created:
+- `stable_diffusion`                       
+- `docling`
+- `granite_8b_code_instruct`
+- `granite_3_3_8b_instruct`
+* **Backends**: this is where you can see the backends that can be used by your products. You can see that the `granite_3_3_8b_instruct` backend that is used by the `granite_3_3_8b_instruct` product and so on. The `backend` in this case is simply the model `Internal Endpoint` that we look at in the earlier section. 
 
 [.bordershadow]
 image::03/03-3scale-section-menu.png[width="50%"]
 
 For now, note the two key items:
 
-* A product named `granite-3dot2-8b-instruct` (mapped to your model)
+* A product named `granite_3_3_8b_instruct` (mapped to your model)
 * A backend service with the same name powering that product
 
 
@@ -81,22 +84,22 @@ As a developer, you will need to register an application to get credentials for 
 
 Let's do that now:
 
-1. Click on the `See your Applications and their credentials` link on the front page.
+1. Click on the `Create an Application` link on the front page.
 +
 [.bordershadow]
 image::03/03-3scale-see-applications.png[width="50%"]
 
-2. You will be taken to the `Apps and API Keys` section, where you can see that there are two applications that were already created for you (the 3Scale default Echo API and the `user1` app). We will be creating a new application. Start by clicking on the `Create new application` button.
+2. You will be taken to the `Apps and API Keys` section. We will be creating a new application. Start by clicking on the `Create new application` button.
 +
 [.bordershadow]
 image::03/03-3scale-create-application.png[width="50%"]
 
-3. Select the Service you want to use. In this case, we will use the `granite-3dot2-8b-instruct` service that has been pre-deployed.
+3. Select the Service you want to use. In this case, we will use the `granite_3_3_8b_instruct` service that has been pre-deployed.
 +
 [.bordershadow]
 image::03/03-3scale-select-service.png[width="50%"]
 
-4. Give a name to your application, for example `Granite application`. Click on `Create Application`.
+4. Give a name to your application, for example `Granite instruct application`. Click on `Create Application`.
 +
 [.bordershadow]
 image::03/03-3scale-application-name.png[width="50%"]
