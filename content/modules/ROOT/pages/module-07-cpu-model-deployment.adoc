@@ -60,116 +60,58 @@ Let's begin by accessing the OpenShift AI dashboard where you'll manage your mod
 * You should see the OpenShift AI dashboard home page with various options for data science projects, model serving, and more.
 
 [.bordershadow]
-image::07/01-rhoai-dashboard-home.png[OpenShift AI Dashboard Home,width=75%]
+image::new/vllmcpu-ocpai.png[OpenShift AI Dashboard Home,width=75%]
 
-== Step 2: Navigate to Model Serving
+== Step 2: Navigate to Data Science Projects
 
 OpenShift AI provides centralized model serving capabilities through the dashboard.
 
-* In the left navigation menu, click on **Model Serving**
+* In the left navigation menu, click on **Data Science Project**
 
-* This opens the model serving overview page where you can see all deployed models across your projects
-
-[.bordershadow]
-image::07/02-model-serving-overview.png[Model Serving Overview,width=75%]
-
-== Step 3: Select Your Project
-
-You'll deploy this model in your existing project namespace.
-
-* Look for the project selector dropdown (typically at the top of the page)
-
-* Select your project: `{user}-ai-models`
-+
-NOTE: This is the same project where you deployed the Granite model in Module 1. You can have multiple models deployed in the same project.
-
-* Once selected, you should see any existing model servers in this project
+* Then create a new Data Science Project clicking the respective button, assign a name to your project such as: `{user}-vllmcpu`
 
 [.bordershadow]
-image::07/03-project-selection.png[Select Project,width=75%]
+image::new/vllmcpu-ocpai2.png[Model Serving Overview,width=75%]
+
+== Step 3: Move to the Models subsection
+
+You'll deploy this model in the just created project namespace.
+
+[.bordershadow]
+image::new/vllmcpu-ocpai3.png[Select Project,width=75%]
 
 == Step 4: Create a New Model Server
 
 A model server is a deployment that hosts one or more models. Each server can have its own runtime configuration.
 
-* Click the **Deploy model** button (or **Add model server** if this is your first deployment in this interface)
+* Click the **Select single-model** button 
+
+* Then click the **Deploy model** button
 
 * You'll see a form to configure your model server
 
-* In the **Model server name** field, enter: `qwen-cpu-server`
+* In the **Model deployment name** field, enter: `qwen-cpu`
 
 * For **Serving runtime**, select the custom CPU-optimized vLLM runtime from the dropdown
 +
-Look for: **vLLM CPU Runtime** or similar (the exact name depends on how your administrator configured it)
-+
-[.bordershadow]
-image::07/04-select-runtime.png[Select vLLM CPU Runtime,width=75%]
+Look for: **vLLM CPU ServingRuntime** or similar
 
-* Leave **Model route** enabled (checked) to create an external route for API access
+* Select **Medium** as Model server size.
+
+* Leave **Model route** disabled (not checked) to not expose our model outside of the OpenShift cluster
 
 * Set the **Number of model replicas** to `1`
-+
-For CPU-based models, horizontal scaling is often more practical than vertical scaling
 
-== Step 5: Configure Model Server Resources
+* Select **OCI compliant registry** as default Connection type.
 
-CPU-based models require different resource configurations than GPU models.
+* Set **quayio** as name for the connection
 
-* Expand the **Resources** section if it's collapsed
+* Set `{}` as value in the **Secret details**
 
-* Configure the following resource limits:
-+
-[source,yaml]
-----
-CPU Request: 2
-CPU Limit: 4
-Memory Request: 4Gi
-Memory Limit: 8Gi
-----
+* Set **quay.io** as Registry host
 
-* These values ensure:
-** Sufficient CPU cores for model inference (2-4 cores)
-** Adequate memory for loading the 0.5B parameter model (~4-8GB)
-** Room for concurrent requests and runtime overhead
-
-[.bordershadow]
-image::07/05-configure-resources.png[Configure Resources,width=75%]
-
-NOTE: Unlike GPU deployments, CPU-based deployments don't require GPU resource specifications. The vLLM runtime automatically detects the absence of GPUs and optimizes for CPU execution.
-
-== Step 6: Deploy the Model
-
-Now you'll specify which model to deploy on your model server.
-
-* Scroll down to the **Deploy model** section
-
-* In the **Model name** field, enter: `qwen-0.5b-instruct`
-+
-This is the name that will appear in API requests
-
-* For **Model framework**, select **vLLM** (should be pre-selected based on your runtime choice)
-
-* In the **Model location** section, you need to specify where the model is stored
-
-* Choose **Model location type**: **Object storage** or **Model registry** depending on your environment
-+
-For this exercise, we'll use a pre-configured model from a container image
-
-* Select **Existing data connection** or **New data connection** as appropriate
-
-* In the **Path** or **Model path** field, enter the model identifier:
-+
-[source,text]
-----
-quay.io/redhat-ai-services/modelcar-catalog:qwen2.5-0.5b-instruct
-----
-+
-This references a pre-built model image that contains the Qwen2.5-0.5B-Instruct model in vLLM-compatible format
-
-[.bordershadow]
-image::07/06-specify-model-location.png[Specify Model Location,width=75%]
-
-== Step 7: Configure Model Parameters
+* Then place this URL `quay.io/redhat-ai-services/modelcar-catalog:qwen2.5-0.5b-instruct` in the Model URI input field.
++ We are going to use a pre-built OCI image containing our base Qwen model.
 
 vLLM supports various configuration parameters for optimizing inference.
 
@@ -187,12 +129,9 @@ These parameters:
 ** `--max-model-len`: Limits the maximum sequence length (context window) to reduce memory usage
 ** `--max-num-seqs`: Controls how many sequences can be processed in parallel
 
-[.bordershadow]
-image::07/07-model-parameters.png[Model Parameters,width=75%]
-
 TIP: For CPU deployments, conservative values for max-model-len and max-num-seqs help ensure stable performance and prevent memory exhaustion.
 
-== Step 8: Review and Deploy
+== Step 5: Review and Deploy
 
 Before deploying, review your configuration.
 
@@ -212,10 +151,8 @@ Before deploying, review your configuration.
 ** Load the Qwen2.5-0.5B model into memory
 ** Expose the inference endpoint
 
-[.bordershadow]
-image::07/08-deployment-initiated.png[Deployment Initiated,width=75%]
 
-== Step 9: Monitor Deployment Progress
+== Step 6: Monitor Deployment Progress
 
 The deployment process may take several minutes as the model image is pulled and loaded.
 
@@ -228,8 +165,7 @@ The deployment process may take several minutes as the model image is pulled and
 ** **ContainerCreating**: The container image is being pulled
 ** **Running**: The vLLM runtime is loading the model
 
-[.bordershadow]
-image::07/09-deployment-progress.png[Deployment Progress,width=75%]
+TIP: You could even take a look to the underlying OpenShift cluster to see which kind of resources the OpenShift AI is scheduling on the OpenShift cluster.
 
 * You can click on the model server name to see more details
 
@@ -237,7 +173,7 @@ image::07/09-deployment-progress.png[Deployment Progress,width=75%]
 
 TIP: CPU-based model loading is generally faster than GPU models since there's no GPU initialization overhead, but initial container image pull may take time on first deployment.
 
-== Step 10: Verify Deployment Status
+== Step 7: Verify Deployment Status
 
 Once deployment completes, verify everything is ready.
 
@@ -248,19 +184,19 @@ Once deployment completes, verify everything is ready.
 ** **Replicas**: 1/1
 ** **Inference endpoint**: A URL for making API requests
 
-[.bordershadow]
-image::07/10-deployment-ready.png[Deployment Ready,width=75%]
-
 * The inference endpoint URL will look something like:
 +
 [source,text]
 ----
-https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1
+https://qwen-cpu.{user}-vllmcpu.svc.cluster.local
 ----
+
+[.bordershadow]
+image::new/vllmcpu-model-deployed.png[Workbench Configuration,width=75%]
 
 * This is your OpenAI-compatible endpoint for the Qwen model
 
-== Step 11: Test the Model with a Jupyter Notebook
+== Step 8: Test the Model with a Jupyter Notebook
 
 Now that your CPU-optimized model is deployed, let's test it using a Jupyter notebook with LangChain. You'll create a workbench in OpenShift AI and use a pre-built notebook that demonstrates how to interact with the model.
 
@@ -270,27 +206,17 @@ Now that your CPU-optimized model is deployed, let's test it using a Jupyter not
 
 * In the left navigation, click on **Data Science Projects**
 
-* You should see your existing project `{user}-ai-models` (the same namespace where your model is deployed)
+* You should see your existing project `{user}-vllmcpu` (the same namespace where your model is deployed)
 
 * Click on the project name to open it
 
-[.bordershadow]
-image::07/11a-open-project.png[Open Data Science Project,width=75%]
-
 * In the project view, locate the **Workbenches** section and click **Create workbench**
-
-[.bordershadow]
-image::07/11b-create-workbench.png[Create Workbench,width=75%]
 
 * Configure the workbench with the following settings:
 ** **Name**: `qwen-test-notebook`
-** **Notebook image**: Select **Standard Data Science** (this includes Python, Jupyter, and common ML libraries)
+** **Notebook image**: Select **Minimal Data Science** (this includes Python, Jupyter, and common ML libraries)
 ** **Container size**: **Small** (CPU and memory requirements are minimal for testing)
-** **Cluster storage**: Create new persistent storage with **5Gi** (to store notebooks and code)
 ** Leave other settings at their defaults
-
-[.bordershadow]
-image::07/11c-workbench-config.png[Workbench Configuration,width=75%]
 
 * Click **Create workbench**
 
@@ -299,21 +225,19 @@ image::07/11c-workbench-config.png[Workbench Configuration,width=75%]
 This may take 1-2 minutes as the notebook image is pulled and the container starts
 
 [.bordershadow]
-image::07/11d-workbench-starting.png[Workbench Starting,width=75%]
+image::new/vllmcpu-wbstarting.png[Workbench Starting,width=75%]
 
-* Once running, click **Open** to launch the Jupyter interface
+* Once running, click on its name to launch the Jupyter interface
++ If requested input your OpenShift credentials
 
 [.bordershadow]
-image::07/11e-workbench-running.png[Workbench Running,width=75%]
+image::new/vllmcpu-jupyter.png[Workbench Running,width=75%]
 
 === Clone the Workshop Repository
 
 You'll now clone the same Gitea repository from the previous modules to access the exercise notebook.
 
 * In the Jupyter interface, click on the **Git** icon in the left sidebar (or use the menu: **Git → Clone a Repository**)
-
-[.bordershadow]
-image::07/11f-jupyter-git.png[Jupyter Git Interface,width=75%]
 
 * Enter your Gitea repository URL:
 +
@@ -325,9 +249,6 @@ image::07/11f-jupyter-git.png[Jupyter Git Interface,width=75%]
 * If prompted for credentials, enter:
 ** Username: `{user}`
 ** Password: `{password}`
-
-[.bordershadow]
-image::07/11g-git-clone.png[Git Clone Dialog,width=75%]
 
 * Click **Clone**
 
@@ -344,13 +265,10 @@ handson-llmaas-showroom/exercises/07-cpu-model-test/
 
 * You should see a Python notebook file: `test_qwen_langchain.ipynb`
 
-[.bordershadow]
-image::07/11h-exercise-folder.png[Exercise 07 Folder,width=75%]
-
 * Double-click the notebook to open it
 
 [.bordershadow]
-image::07/11i-notebook-opened.png[Notebook Opened,width=75%]
+image::new/vllmcpu-jupyternotebook.png[Notebook Opened,width=75%]
 
 === Understanding the Notebook
 
@@ -404,7 +322,8 @@ model = ChatOpenAI(
 
 Key parameters:
 
-* `model_name`: Must match the model name from your deployment (`qwen-0.5b-instruct`)
+* `model_name`: Must match the model name from your deployment (`qwen-cpu
+`)
 * `openai_api_base`: The inference endpoint URL from your model server
 * `openai_api_key`: Set to "not-needed" since the model server doesn't require authentication (internal to cluster)
 * `temperature`: Controls randomness (0.7 is balanced between creative and focused)
@@ -490,10 +409,7 @@ Before running the notebook, you need to update the model endpoint URL to match 
 openai_api_base="https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1"
 ----
 +
-Replace `{user}` with your actual username (e.g., `user1`, `user2`, etc.)
-
-[.bordershadow]
-image::07/11j-configure-endpoint.png[Configure Endpoint URL,width=75%]
+Replace `{user}` with your actual username (e.g., `student1`, `student2`, etc.)
 
 NOTE: The notebook is configured to work with the model server running in the same namespace, so no authentication is required. The workbench can access the model service directly via the internal cluster network.
 
@@ -503,8 +419,6 @@ Now let's execute the notebook to test your model!
 
 * Click on the first cell and select **Run → Run All Cells** from the menu (or press `Shift+Enter` on each cell sequentially)
 
-[.bordershadow]
-image::07/11k-run-cells.png[Run All Cells,width=75%]
 
 * Watch as each cell executes:
 ** Cell 1 installs the dependencies (may take 30-60 seconds)
@@ -515,9 +429,6 @@ image::07/11k-run-cells.png[Run All Cells,width=75%]
 ** Cell 6 demonstrates multi-turn conversation
 
 * You should see output from the model after each inference cell:
-
-[.bordershadow]
-image::07/11l-notebook-output.png[Notebook Output,width=75%]
 
 TIP: If you encounter connection errors, verify that the model endpoint URL is correct and that the model server pod is running in the same namespace.
 
@@ -554,16 +465,14 @@ Let's look at the underlying Kubernetes resources to understand what was created
 
 * Navigate to the OpenShift Console: https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]
 
-* Switch to **Developer** perspective (top-left dropdown)
+* Select your project: `{user}-vllmcpu`
 
-* Select your project: `{user}-ai-models`
+* Click on **Workloads -> Topology** to see a visual representation
 
-* Click on **Topology** to see a visual representation
-
-* You should see a new deployment for `qwen-cpu-server`
+* You should see a new deployment for `qwen-cpu`
 
 [.bordershadow]
-image::07/12-topology-view.png[Topology View,width=75%]
+image::new/vllmcpu-ocp-topology.png[Topology View,width=75%]
 
 * Click on the deployment to open the details panel:
 ** **Pods**: Shows 1 pod running with CPU resources
@@ -586,8 +495,6 @@ INFO: Model loaded successfully
 INFO: Starting API server on 0.0.0.0:8000
 ----
 
-[.bordershadow]
-image::07/13-pod-logs.png[Pod Logs,width=75%]
 
 * Navigate to **Observe** → **Metrics** in the OpenShift Console
 
@@ -596,8 +503,6 @@ image::07/13-pod-logs.png[Pod Logs,width=75%]
 ** Memory consumption
 ** Network traffic
 
-[.bordershadow]
-image::07/14-resource-metrics.png[Resource Metrics,width=75%]
 
 == Step 14: Compare with GPU Deployment
 
