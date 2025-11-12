@@ -208,7 +208,8 @@ IMPORTANT: You need to create a **brand new application** in the 3Scale Develope
 * Log in with your credentials (username: `{user}`, password: `{password}`)
 * Click on **Applications** in the top navigation
 * Click **Create Application**
-* Select your plan and provide a name for your application (e.g., "Continue Code Assistant")
+* Select the `granite_3_3_8b_instruct` service
+* Provide a name for your application (e.g., "Continue Code Assistant")
 * After creating the application, copy the **API Key** (User Key) provided
 * Use this API key and the model endpoint URL in your Continue configuration below
 
@@ -220,7 +221,7 @@ image::new/continue-click-config-option-button.png[width="50%"]
 
 This will open the `config.yaml` file. Delete the file contents and replace with the following:
 
-[source,yaml,role="execute"]
+[source,yaml,role="execute",subs=attributes+]
 ----
 name: Local Assistant
 version: 1.0.0
