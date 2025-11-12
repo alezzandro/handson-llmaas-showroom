@@ -39,7 +39,12 @@ Your platform engineer has provided you a direct URL to the Dev Spaces console t
 
 As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
 
-*  Create a new workspace by clicking **Create Workspace** and then selecting **Empty Workspace** from the catalog list. You may need to wait a moment for the workspace to be ready.
+*  Create a new workspace by clicking **Create Workspace** and then under **Import from Git** specify the following URL: 
+[,role=execute,subs="attributes"]
+----
+https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-showroom
+----
+In  **Advanced Options** set **Memory Limit** to **2** and **CPU Limit** to **1** then click on `Create & Open`.
 
 image::new/create-workspace.png[width="50%"]
 
@@ -47,65 +52,7 @@ After a moment, you'll see the VSCode interface running in your browser. If prom
 
 image::code/vscode_trust.png[width="50%"]
 
-Now that your workspace is ready, let's set up your code repository.
-
-== Step 2: Import the Workshop Repository to Gitea
-
-Your platform engineer has deployed a local Git server (Gitea) on OpenShift for your team. You'll import the workshop repository from GitHub into your personal Gitea account, where you can make changes and push your code.
-
-=== Login to Gitea
-
-* Open Gitea in a new browser tab: {gitea-console-url}[{gitea-console-url},window=_blank]
-
-* Click **Sign In** in the top-right corner
-
-* Log in with your credentials:
-** Username: `{user}`
-** Password: `{password}`
-+
-[.bordershadow]
-
-
-After logging in, you'll see your personal Gitea dashboard.
-
-=== Create a New Repository by Migrating from GitHub
-
-You'll import the workshop repository from GitHub into your Gitea instance.
-
-* Click the **+** icon in the top-right corner, then select **New Migration**
-+
-[.bordershadow]
-image::new/gitea-new-migration.png[width="50%"]
-
-* Select **Git** as the migration source
-
-[.bordershadow]
-image::new/gitea-migration-git.png[width="50%"]
-
-* Fill in the migration form:
-** **Clone Address**: `{git-clone-repo-url}`
-** **Owner**: Select your username (`{user}`)
-** **Repository Name**: `handson-llmaas-showroom`
-** Leave other options at their defaults
-
-[.bordershadow]
-image::new/gitea-migration-form.png[width="50%"]
-
-
-* Click **Migrate Repository**
-
-* Wait for the migration to complete (this may take 30-60 seconds)
-
-* You now have your own copy of the repository in Gitea at: `{gitea-console-url}/{user}/handson-llmaas-showroom`
-+
-[.bordershadow]
-image::new/gitea-git-migrated.png[width="75%"]
-
-=== Clone Your Migrated Repository to Dev Spaces
-
-Now let's get the code into your development environment.
-
-* Return to your **OpenShift Dev Spaces** workspace (VSCode in the browser)
+Now that your workspace is ready do the following
 
 * Open a new terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
 
@@ -117,44 +64,28 @@ git config --global user.name "{user}"
 git config --global user.email "{user}@example.com"
 ----
 
-* Navigate to the projects directory and clone your forked repository:
-+
-[source,bash,role=execute,subs="attributes"]
-----
-cd /projects
-git clone {gitea-repo-url}
-cd handson-llmaas-showroom/exercises/05-code-development
-----
-+
-NOTE: If prompted for credentials, use your username (`{user}`) and password (`{password}`)
-
-* Verify the clone was successful:
-+
-[source,bash]
-----
-ls -la
-----
-
-* Open this directory in VSCode's file explorer. You should see:
+* Open the directory in VSCode's file explorer. You should see:
 +
 ----
-05-code-development/
-├── app.py                 # Main Flask application (incomplete)
-├── requirements.txt       # Python dependencies
-├── templates/
-│   └── index.html        # Frontend UI (complete)
-├── Dockerfile            # Container configuration
-└── openshift/            # Kubernetes manifests
-    ├── buildconfig.yaml
-    ├── deployment.yaml
-    ├── imagestream.yaml
-    ├── route.yaml
-    └── service.yaml
+handson-llmaas-showroom
+├── exercises
+    ├── 05-code-development/
+        ├── app.py                 # Main Flask application (incomplete)
+        ├── requirements.txt       # Python dependencies
+        ├── templates/
+        │   └── index.html        # Frontend UI (complete)
+        ├── Dockerfile            # Container configuration
+        └── openshift/            # Kubernetes manifests
+            ├── buildconfig.yaml
+            ├── deployment.yaml
+            ├── imagestream.yaml
+            ├── route.yaml
+            └── service.yaml
 ----
 
 Your repository is now ready in your development environment. Before we dive into the code, let's meet **Continue**.
 
-== Step 3: Add Continue, Your Coding Teammate
+== Step 2: Add Continue, Your Coding Teammate
 
 **Continue** is an open-source AI code assistant that integrates seamlessly into VS Code. Unlike traditional code completion tools, Continue provides an interactive chat interface where you can have natural conversations about your code. You can ask Continue to perform actions like:
 
@@ -190,7 +121,7 @@ Once installed, the extension will be ready to use. You may need to reload the w
 
 You've now installed Continue - next, let's connect it to your private LLM.
 
-== Step 4: Connect Continue to Your Granite Model
+== Step 3: Connect Continue to Your Granite Model
 
 Navigate to the **Continue sidebar icon** in the left-hand side navigation panel:
 
