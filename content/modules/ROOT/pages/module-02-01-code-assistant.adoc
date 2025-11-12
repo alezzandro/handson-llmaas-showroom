@@ -40,10 +40,8 @@ Your platform engineer has provided you a direct URL to the Dev Spaces console t
 As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
 
 *  Create a new workspace by clicking **Create Workspace** and then under **Import from Git** specify the following URL: 
-[,role=execute,subs=attributes+]
-----
 https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-showroom
-----
+
 In  **Advanced Options** set **Memory Limit** to **2** and **CPU Limit** to **1** then click on `Create & Open`.
 
 image::new/create-workspace.png[width="50%"]
