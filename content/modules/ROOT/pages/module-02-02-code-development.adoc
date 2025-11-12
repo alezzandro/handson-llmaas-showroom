@@ -107,22 +107,27 @@ This function should return all tasks sorted by creation date.
 
 * **Highlight the entire function** from the `@app.route` decorator through the `pass` statement, including all the TODO comments
 
-* **Right-click** on the highlighted code → **Continue** → **"Add to chat"**
+* **Right-click** on the highlighted code → **Continue** → **"Add to chat"** (or press `Ctrl-L`)
 
-* In the Continue chat window that opens, type:
+* In the Continue chat window that opens, copy the following text:
 +
+[source,role="execute"]
+
 ----
 Complete this function to return all tasks sorted by creation date (newest first). Return as JSON.
 
 Remember: 'tasks' is a global list variable defined at the top of the file.
 ----
+and then hit `Enter` or press the `Send` button.
+
+image::code/chat_complete_get_tasks.png[width="50%"]
 
 * Continue will generate the code in the chat window. **Review the generated code.** It should:
 ** Sort tasks by `created_at` in descending order
 ** Return tasks as JSON using `jsonify()`
 ** Return status code 200
 
-* **Copy the implementation code** from the chat (the part inside the function body)
+* **Copy the implementation code** from the chat (the part inside the function body). You can also use the `Apply` button and you will be asked to accept the changes in `app.py`.
 
 * **Paste it into your `app.py` file**, replacing the TODO comments and `pass` statement
 
