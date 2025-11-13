@@ -8,8 +8,8 @@
 * Module 3: Exploring Parasol AI Studio
 ** xref:module-03-01-parasol-ai-studio-intro.adoc#parasol-ai-studio-intro[Module 3.1: Inroduction to Parasol AI Studio]
 ** xref:module-03-02-parasol-ai-studio-anythingllm.adoc#parasol-ai-studio-anythingllm[Module 3.2: AnythingLLM]
-** xref:module-03-03-parasol-ai-studio-code.adoc#parasol-ai-studio-intro[Module 3.3: Code]
-** xref:module-03-04-parasol-ai-studio-intro.adoc#parasol-ai-studio-docling[Module 3.4: Docling]
+** xref:module-03-03-parasol-ai-studio-code.adoc#parasol-ai-studio-code[Module 3.3: Code]
+** xref:module-03-04-parasol-ai-studio-docling.adoc#parasol-ai-studio-docling[Module 3.4: Docling]
 ** xref:module-03-05-parasol-ai-studio-stable-diffusion.adoc#parasol-ai-studio-stable-diffusion[Module 3.5: Stable Diffusion]
 * xref:module-04-cpu-model-deployment.adoc#cpu-model-deployment[Module 4: Deploying a CPU-Optimized Model]
 * xref:module-05-analytics.adoc#analytics[Module 5: Analytics]
