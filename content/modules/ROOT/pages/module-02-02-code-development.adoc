@@ -411,8 +411,8 @@ This tells OpenShift to build from your personal Gitea repository instead of the
 [source,bash,subs="attributes"]
 ----
 cd /projects/handson-llmaas-code-development
-git openshift/deployment.yaml
-git openshift/buildconfig.yaml
+git add openshift/deployment.yaml
+git add openshift/buildconfig.yaml
 git commit -m "Configure deployment for {user}"
 git push origin main
 ----
@@ -427,7 +427,7 @@ Before deploying to OpenShift, you need to commit and push your completed applic
 +
 [source,bash]
 ----
-cd /projects/handson-llmaas-showroom
+cd /projects/handson-llmaas-code-development
 ----
 
 * Check which files you've modified:
@@ -437,13 +437,13 @@ cd /projects/handson-llmaas-showroom
 git status
 ----
 +
-You should see `exercises/05-code-development/app.py` as modified.
+You should see `app.py` as modified.
 
 * Stage and commit your completed code:
 +
 [source,bash,subs="attributes"]
 ----
-git add exercises/05-code-development/app.py
+git add app.py
 git commit -m "Complete task manager application with AI integration"
 ----
 
