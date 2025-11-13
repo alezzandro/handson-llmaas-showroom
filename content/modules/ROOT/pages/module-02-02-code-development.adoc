@@ -300,21 +300,21 @@ Before deploying to OpenShift, let's test locally in your Dev Spaces environment
 
 * In the terminal, make sure you're in the exercise directory:
 +
-[source,bash]
+[source,bash,role="execute"]
 ----
 cd /projects/handson-llmaas-code-development
 ----
 
 * Install dependencies:
 +
-[source,bash]
+[source,bash,role="execute"]
 ----
 pip install -r requirements.txt
 ----
 
-* Set environment variables to point to your AI model. Replace `{user}` with your actual username:
+* Set environment variables to point to your AI model.
 +
-[source,bash,subs="attributes"]
+[source,bash,role="execute"]
 ----
 export AI_MODEL_URL="https://granite-33-8b-instruct.llm-hosting.svc.cluster.local/v1/chat/completions"
 export AI_MODEL_NAME="granite-3.3-8b-instruct"
@@ -326,7 +326,7 @@ NOTE: Replace `your-api-token-here` with your actual API token from the MaaS pla
 
 * Run the application:
 +
-[source,bash]
+[source,bash,role="execute"]
 ----
 python3.11 app.py
 ----
@@ -364,7 +364,7 @@ Now let's get your application ready to deploy on OpenShift.
 1. In the top menu bar, click on **Terminal**
 2. Select **New Terminal**
 +
-image::05/05-devspaces-new-terminal.png[width="50%"]
+image::02/02-open-terminal.png[width="50%"]
 +
 TIP: The Dev Spaces workspace is already authenticated with OpenShift using your credentials, so you can immediately start using `oc` commands.
 
@@ -382,7 +382,7 @@ oc new-project {user}-task-manager
 [source,yaml,subs="attributes"]
 ----
 - name: AI_MODEL_URL
-  value: "http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
+  value: "https://granite-33-8b-instruct.llm-hosting.svc.cluster.local/v1/chat/completions"
 - name: AI_MODEL_NAME
   value: "granite-3.3-8b-instruct"
 - name: AI_API_TOKEN
@@ -399,7 +399,7 @@ NOTE: Replace `your-api-token-here` with your actual API token from the MaaS pla
 +
 [source,yaml,subs="attributes"]
 ----
-uri: {gitea-repo-url}
+uri: https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-code-development
 ----
 +
 This tells OpenShift to build from your personal Gitea repository instead of the upstream GitHub repository.
@@ -410,9 +410,9 @@ This tells OpenShift to build from your personal Gitea repository instead of the
 +
 [source,bash,subs="attributes"]
 ----
-cd /projects/handson-llmaas-showroom
-git add exercises/05-code-development/openshift/deployment.yaml
-git add exercises/05-code-development/openshift/buildconfig.yaml
+cd /projects/handson-llmaas-code-development
+git openshift/deployment.yaml
+git openshift/buildconfig.yaml
 git commit -m "Configure deployment for {user}"
 git push origin main
 ----
