@@ -40,15 +40,17 @@ Your platform engineer has provided you a direct URL to the Dev Spaces console t
 As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
 
 *  Create a new workspace by clicking **Create Workspace** and then under **Import from Git** specify the following URL: 
-https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-showroom
++
+[source,bash,role=execute,subs=attributes+]
+----
+https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-code-development
+----
 
-In  **Advanced Options** set **Memory Limit** to **2** and **CPU Limit** to **1** then click on `Create & Open`.
-
-image::new/create-workspace.png[width="50%"]
+image::code/create-workspace.png[width="100%"]
 
 After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise!
 
-image::code/vscode_trust.png[width="50%"]
+image::code/vscode_trust.png[width="100%"]
 
 Now that your workspace is ready do the following
 
@@ -99,31 +101,11 @@ Continue will execute these requests directly in your editor, with full awarenes
 
 What makes Continue particularly powerful is its flexibility - it supports custom model endpoints, making it perfect for connecting to your private enterprise models. As an **open-source** solution, Continue gives you complete control over your AI coding workflow. 
 
-=== Install Continue
-
-Select the bottom navigation item on the left-hand side to open up the extensions marketplace.
-
-image::code/extensions_tab.png[width=100%]
-
-In the search bar, search for **Continue**.
-
-image::new/continue-extension-marketplace.png[width="50%"]
-
-Click **Install** to install the latest stable release of the Continue extension.
-
-You may get a trust verification message. If prompted, select **Trust Publisher & Install**.
-
-image::code/trust_continue.png[width="50%"]
-
-Once installed, the extension will be ready to use. You may need to reload the window if prompted.
-
-You've now installed Continue - next, let's connect it to your private LLM.
-
-== Step 3: Connect Continue to Your Granite Model
+== Step 2: Connect Continue to Your Granite Model
 
 Navigate to the **Continue sidebar icon** in the left-hand side navigation panel:
 
-image::code/continue_sidebar.png[width="50%"]
+image::code/continue_sidebar.png[width="100%"]
 
 We will do two things in this module:
 
@@ -146,7 +128,7 @@ IMPORTANT: You need to create an **application** for the service `granite_3_3_8b
 
 Click on `Local Config` and then the small settings icon in the **Local Config** pop up.
 
-image::new/continue-click-config-option-button.png[width="50%"]
+image::code/continue-click-config-option-button.png[width="100%"]
 
 This will open the `config.yaml` file. Delete the file contents and replace with the following:
 
@@ -183,7 +165,7 @@ Reference the complete configuration documentation here: https://docs.continue.d
 
 When the model is properly configured, you will see the model name, `Granite-3.3-8b-instruct` in the Continue chat sidebar.
 
-image::code/model_dropdown.png[width="50%"]
+image::code/model_dropdown.png[width="100%"]
 
 Go ahead - test it out and chat a bit!
 
