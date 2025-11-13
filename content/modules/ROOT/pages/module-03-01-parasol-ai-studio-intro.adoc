@@ -1,15 +1,13 @@
 :imagesdir: ../assets/images
 
-[#parasol-ai-studio]
-= Module 3: Exploring Parasol AI Studio
+[#parasol-ai-studio-intro]
+= Module 3.1: Introduction to Parasol AI Studio
 
 == Introduction
 
 Welcome to the Parasol AI Studio lab environment. In this lab, you have access to a fully configured AI application platform that makes enterprise AI accessible to everyone, regardless of their technical background or AI expertise.
 
 Parasol AI Studio is a specialized dashboard that transforms complex AI infrastructure into a simple, intuitive application launcher. Unlike traditional AI platforms that require understanding of model endpoints, API authentication, and configuration parameters, Parasol AI Studio provides a one-click experience for launching pre-configured AI-enabled applications.
-
-image::parasol-dashboard-home.png[Parasol AI Studio Dashboard Home]
 
 == What is Parasol AI Studio?
 
@@ -36,7 +34,7 @@ When you launch an application through Parasol AI Studio, the system automatical
 * Injects credentials into your workbench environment
 * Starts the application ready to use
 
-image::application-provisioning-flow.png[Application Provisioning Process]
+Most of these steps have been part of xref:module-01-03-api.adoc#api-gateway[Module 1.3: AI at Scale with an API Gateway] manually.
 
 === Models-as-a-Service (MaaS) Integration
 
@@ -53,8 +51,6 @@ All model connections are established automatically—you never need to manually
 
 Parasol AI Studio provides specialized workbench environments, each tailored for specific AI use cases. These workbenches are pre-configured container environments that include all necessary tools, libraries, and integrations.
 
-image::workbench-list.png[Available Workbenches]
-
 == Available AI Applications
 
 The lab environment includes several pre-configured AI applications, each designed for different use cases:
@@ -67,8 +63,6 @@ AnythingLLM is an out-of-the-box chatbot application with advanced capabilities:
 * **Retrieval-Augmented Generation (RAG)**: Upload documents and chat with your data
 * **Agent Capabilities**: Execute complex multi-step tasks
 * **Pre-configured**: No setup required, connects automatically to MaaS models
-
-image::anythingllm-interface.png[AnythingLLM Chat Interface]
 
 **Use Cases:**
 
@@ -85,8 +79,6 @@ Docling Serve provides intelligent document processing capabilities:
 * **Layout Analysis**: Understand document structure and hierarchy
 * **Content Extraction**: Pull tables, images, and text with semantic meaning
 * **API Integration**: Automatically connected to Docling MaaS endpoints
-
-image::docling-ui.png[Docling Serve Interface]
 
 **Use Cases:**
 
@@ -105,8 +97,6 @@ An AI-assisted development environment for writing code with AI help:
 * **Refactoring Support**: Improve code quality with AI recommendations
 * **Granite LLM Integration**: Connected to enterprise-grade language models
 
-image::code-server-continue.png[Code Server with Continue.dev]
-
 **Use Cases:**
 
 * Learning new programming languages or frameworks
@@ -123,8 +113,6 @@ A creative application for generating images from text descriptions:
 * **Iterative Refinement**: Generate multiple variations and refine results
 * **Automatic Configuration**: Pre-connected to SDXL MaaS endpoints
 
-image::sdxl-studio.png[Stable Diffusion XL Studio]
-
 **Use Cases:**
 
 * Creative content generation
@@ -138,12 +126,30 @@ image::sdxl-studio.png[Stable Diffusion XL Studio]
 
 From a user perspective, getting started with any AI application is remarkably simple:
 
-1. **Select an Application**: Choose from the available workbench types
-2. **Provide a Name**: Give your workbench instance a meaningful name
-3. **Launch**: Click to create the workbench
-4. **Use**: Access your fully configured application immediately
+* **Create a project**
++
+image:03/01_create_project_1.png[]
++
+and provide a name {user}-parasol-ai and hit `Create`
++
+image:03/01_create_project_2.png[]
++
+Now you are ready to create your first Parasol AI Studio application
+* **Select an Application**
++
+First choose `Create an application`
++
+image:03/01_create_application_1.png[]
++
+Under `Type` you can select from a range of applications
++
+image:03/01_application_options.png[]
+* **Provide a Name**: Give your application a meaningful name
+* **Create**: Click to create the application
++
+image:03/01_create_application_2.png[]
+* **Use**: Access your fully configured application immediately
 
-image::workbench-creation.png[Creating a New Workbench]
 
 Behind the scenes, Parasol AI Studio handles all the complexity:
 
@@ -164,8 +170,6 @@ While you don't need to understand the technical details to use the platform, it
 **MaaS Integration**: The platform communicates with Models-as-a-Service APIs to provision users and applications, retrieve tokens, and configure endpoints.
 
 **Kubernetes/OpenShift**: Workbenches run as containerized pods in OpenShift, with all configuration injected via environment variables.
-
-image::architecture-overview.png[Parasol AI Studio Architecture]
 
 == Key Use Cases
 
@@ -241,8 +245,6 @@ In this lab, you have access to a fully configured Parasol AI Studio instance. Y
 * **Experiment with AI**: Try different use cases with each application
 * **Learn by Doing**: Gain hands-on experience with enterprise AI tools
 
-image::lab-environment.png[Lab Environment Overview]
-
 === What You Don't Need to Worry About
 
 Since this is a managed lab environment with Parasol AI Studio, you don't need to:
@@ -262,17 +264,21 @@ Parasol AI Studio represents a significant step forward in making enterprise AI 
 
 In this lab, you have the opportunity to experience firsthand how easy it can be to work with sophisticated AI capabilities when the underlying complexity is properly managed. Whether you're processing documents, writing code with AI assistance, generating images, or building chatbots, Parasol AI Studio makes it simple.
 
-image::parasol-conclusion.png[Parasol AI Studio - Making AI Accessible]
-
 == Try It Yourself!
 
 Now it's your turn to experience Parasol AI Studio firsthand. The platform has been deployed in your workshop environment and is ready for you to explore.
 
-* Access Parasol AI Studio: {parasol_ai_studio_url}[{parasol_ai_studio_url},window=_blank]
+You can access Parasol AI Studio via a link on the OpenShift Console
 
-* Log in with your credentials:
-** Username: `{user}`
-** Password: `{password}`
+image::03/01-console_link.png[Parasol AI Studio Dashboard Home]
+
+or by visiting the following URL
+[source,role="execute",subs=attributes+]
+----
+https://my-ai-studio-redhat-ods-applications.{openshift_cluster_ingress_domain}
+----
+
+Use the credentials {user}/{password} to login.
 
 Once logged in, you can:
 
@@ -280,9 +286,6 @@ Once logged in, you can:
 * **Create a Workbench**: Launch one of the available AI applications (AnythingLLM, Docling Serve, Code Server with Continue.dev, or Stable Diffusion XL Studio)
 * **Test AI Capabilities**: Upload documents, ask questions, generate code, or create images
 * **Observe the Simplicity**: Notice how you didn't need to configure API endpoints, manage credentials, or set up infrastructure
-
-[.bordershadow]
-image::parasol-try-yourself.png[Try Parasol AI Studio,width=75%]
 
 TIP: When creating a workbench, the platform automatically provisions your MaaS credentials and configures all model endpoints. The entire process takes just a few clicks!
 

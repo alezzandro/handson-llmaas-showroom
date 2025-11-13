@@ -14,7 +14,7 @@ As a **platform engineer**, you may inherit clusters filled with GPU nodes and e
 - Developers need model access, not GPU management complexity
 
 [.bordershadow]
-image::02/iaas.png[width="50%"]
+image::01/01-iaas.png[width="50%"]
 
 == Models-as-a-Service: A Better Abstraction for AI at Scale
 
@@ -41,7 +41,7 @@ To address these challenges as a platform engineer, you will design a centralize
 * Eliminates waste while ensuring fair access and cost control
 
 [.bordershadow]
-image::02/maas.png[width="50%"]
+image::01/01-maas.png[width="50%"]
 
 == Module 1 Goals: Step into the Platform Engineer Role
 

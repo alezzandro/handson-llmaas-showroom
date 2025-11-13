@@ -46,11 +46,11 @@ As a developer, you will create your own workspace without needing to install or
 https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-code-development
 ----
 
-image::code/create-workspace.png[width="100%"]
+image::02/02-create-workspace.png[width="100%"]
 
 After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise!
 
-image::code/vscode_trust.png[width="100%"]
+image::02/02-vscode_trust.png[width="100%"]
 
 Now that your workspace is ready do the following
 
@@ -97,7 +97,7 @@ What makes Continue particularly powerful is its flexibility - it supports custo
 
 Navigate to the **Continue sidebar icon** in the left-hand side navigation panel:
 
-image::code/continue_sidebar.png[width="100%"]
+image::02/02-continue_sidebar.png[width="100%"]
 
 We will do two things in this module:
 
@@ -120,7 +120,7 @@ IMPORTANT: You need to create an **application** for the service `granite_3_3_8b
 
 Click on `Local Config` and then the small settings icon in the **Local Config** pop up.
 
-image::code/continue-click-config-option-button.png[width="100%"]
+image::02/02-continue-click-config-option-button.png[width="100%"]
 
 This will open the `config.yaml` file. Delete the file contents and replace with the following:
 
@@ -157,7 +157,7 @@ Reference the complete configuration documentation here: https://docs.continue.d
 
 When the model is properly configured, you will see the model name, `Granite-3.3-8b-instruct` in the Continue chat sidebar.
 
-image::code/model_dropdown.png[width="100%"]
+image::02/01-model_dropdown.png[width="100%"]
 
 Go ahead - test it out and chat a bit!
 

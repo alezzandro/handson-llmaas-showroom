@@ -5,7 +5,12 @@
 * Module 2: Coding with AI
 ** xref:module-02-01-code-assistant.adoc#code-asst[Module 2.1: Setup the prerequisites]
 ** xref:module-02-02-code-development.adoc#code-development[Module 2.2: Building an AI-Powered Application]
-* xref:module-03-parasol-ai-studio.adoc#parasol-ai-studio[Module 3: Exploring Parasol AI Studio]
+* Module 3: Exploring Parasol AI Studio
+** xref:module-03-01-parasol-ai-studio-intro.adoc#parasol-ai-studio-intro[Module 3.1: Inroduction to Parasol AI Studio]
+** xref:module-03-02-parasol-ai-studio-anythingllm.adoc#parasol-ai-studio-anythingllm[Module 3.2: AnythingLLM]
+** xref:module-03-03-parasol-ai-studio-code.adoc#parasol-ai-studio-intro[Module 3.3: Code]
+** xref:module-03-04-parasol-ai-studio-intro.adoc#parasol-ai-studio-docling[Module 3.4: Docling]
+** xref:module-03-05-parasol-ai-studio-stable-diffusion.adoc#parasol-ai-studio-stable-diffusion[Module 3.5: Stable Diffusion]
 * xref:module-04-cpu-model-deployment.adoc#cpu-model-deployment[Module 4: Deploying a CPU-Optimized Model]
 * xref:module-05-analytics.adoc#analytics[Module 5: Analytics]
 * xref:module-06-closing.adoc#closing-summary[Module 6: Reflect and Wrap-Up]

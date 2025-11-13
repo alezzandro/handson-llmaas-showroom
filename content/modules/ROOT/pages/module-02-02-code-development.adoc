@@ -102,7 +102,7 @@ Remember: 'tasks' is a global list variable defined at the top of the file.
 ----
 and then hit `Enter` or press the `Send` button.
 
-image::code/chat_complete_get_tasks.png[width="50%"]
+image::02/02-chat_complete_get_tasks.png[width="50%"]
 
 * Continue will generate the code in the chat window. **Review the generated code.** It should:
 ** Sort tasks by `created_at` in descending order
@@ -395,7 +395,7 @@ NOTE: Replace `your-api-token-here` with your actual API token from the MaaS pla
 
 * Now open `openshift/buildconfig.yaml` in VSCode
 
-* Find the `uri:` line (around line 17) and update it with your Gitea repository URL:
+* Find the `uri:` line and update it with your Gitea repository URL:
 +
 [source,yaml,subs="attributes"]
 ----
