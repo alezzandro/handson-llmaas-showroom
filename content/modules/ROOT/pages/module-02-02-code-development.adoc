@@ -37,32 +37,15 @@ You should already have your OpenShift Dev Spaces environment running from the p
 
 * Open your existing workspace by clicking `Open`.
 
-Once inside VSCode, navigate to the exercise directory:
-
-* Open a terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
-
-* Navigate to the exercise directory:
-+
-[source,bash]
-----
-cd /projects/handson-llmaas-showroom/exercises/05-code-development
-----
-
-* Open this directory in VSCode's file explorer. You should see:
+* On the VSCode's file explorer you should see:
 +
 ----
-05-code-development/
+handson-llmaas-code-development
+├── openshift              # Kubernetes manifests
+├── templates              # Frontend UI (complete)
 ├── app.py                 # Main Flask application (incomplete)
-├── requirements.txt       # Python dependencies
-├── templates/
-│   └── index.html        # Frontend UI (complete)
-├── Dockerfile            # Container configuration
-└── openshift/            # Kubernetes manifests
-    ├── buildconfig.yaml
-    ├── deployment.yaml
-    ├── imagestream.yaml
-    ├── route.yaml
-    └── service.yaml
+├── Dockerfile             # Container configuration
+└── requirements.txt       # Python dependencies
 ----
 
 == Step 2: Review the Incomplete Code
