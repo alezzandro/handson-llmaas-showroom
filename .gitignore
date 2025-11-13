@@ -9,6 +9,7 @@ www/
 .cache/
 
 # Ignore IDE and editor files
+.vscode/
 .idea/
 
 # Ignore logs and temporary files
