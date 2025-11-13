@@ -598,7 +598,7 @@ Your task manager consists of:
 
 * **Frontend**: A single-page application built with vanilla JavaScript and HTML
 * **Backend**: Flask REST API with endpoints for CRUD operations
-* **AI Integration**: Direct API calls to your Granite model deployed in Module 1
+* **AI Integration**: Direct API calls to a Granite model
 
 === OpenShift Components
 
@@ -694,7 +694,7 @@ Make the application more robust.
 +
 [source,bash,subs="attributes"]
 ----
-oc exec deployment/task-manager -- curl -X POST http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions \
+oc exec deployment/task-manager -- curl -X POST https://granite-33-8b-instruct.llm-hosting.svc.cluster.local/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -d '{"model":"granite-3.3-8b-instruct","messages":[{"role":"user","content":"Hello"}],"max_tokens":50}'
@@ -706,7 +706,6 @@ NOTE: Replace `YOUR_API_TOKEN` with your actual API token
 
 * Check build logs: `oc logs bc/task-manager`
 * Verify the BuildConfig points to the correct repository and branch
-* Ensure the `contextDir` is set to `exercises/05-code-development`
 
 == What's Next?
 
