@@ -132,7 +132,7 @@ We will do two things in this module:
 
 In order to connect our model to the Continue code extension we must provide the extension our model's endpoint URL and API key from the MaaS application.
 
-IMPORTANT: You need to create a **brand new application** in the 3Scale Developer Portal to get the right credentials for Continue.dev. Navigate to the 3Scale Developer Portal at https://maas.{openshift_cluster_ingress_domain}[https://maas.{openshift_cluster_ingress_domain},window=_blank] and follow these steps:
+IMPORTANT: You need to create an **application** for the service `granite_3_3_8b_instruct` in the 3Scale Developer Portal to get the right credentials for Continue.dev if you haven't done so in xref:module-01-03-api.adoc#api-gateway[Module 1.3: AI at Scale with an API Gateway]. Navigate to the 3Scale Developer Portal at https://maas.{openshift_cluster_ingress_domain}[https://maas.{openshift_cluster_ingress_domain},window=_blank] and follow these steps:
 
 * Log in with your credentials (username: `{user}`, password: `{password}`)
 * Click on **Applications** in the top navigation
