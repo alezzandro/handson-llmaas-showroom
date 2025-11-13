@@ -86,7 +86,7 @@ This approach gives you better control and helps you understand the code before 
 
 This function should return all tasks sorted by creation date.
 
-* In `app.py`, locate the `get_tasks()` function (around line 31)
+* In `app.py`, locate the `get_tasks()` function
 
 * **Highlight the entire function** from the `@app.route` decorator through the `pass` statement, including all the TODO comments
 
@@ -119,9 +119,9 @@ image::code/chat_complete_get_tasks.png[width="50%"]
 
 This function creates a new task from JSON input.
 
-* Locate the `create_task()` function (around line 43)
+* Locate the `create_task()` function
 
-* **Highlight the entire function** from `@app.route` through `return`
+* **Highlight the entire function** from `@app.route` through `pass`
 
 * **Right-click** → **Continue** → **"Add to chat"**
 
@@ -153,7 +153,7 @@ Remember: 'tasks' is a global list variable and 'task_counter' is a global integ
 
 === Function 3: Implementing `update_task()`
 
-* Locate the `update_task()` function (around line 57)
+* Locate the `update_task()` function
 
 * **Highlight the entire function** from `@app.route` through `pass`
 
@@ -178,7 +178,7 @@ Remember: 'tasks' is a global list variable defined at the top of the file. You 
 
 === Function 4: Implementing `delete_task()`
 
-* Locate the `delete_task()` function (around line 71)
+* Locate the `delete_task()` function
 
 * **Highlight the entire function** from `@app.route` through `pass` (note: the `global tasks` line is already there)
 
@@ -200,7 +200,64 @@ Remember: 'tasks' is a global list variable defined at the top of the file. The 
 
 * **Copy and paste** the implementation into your `app.py` file
 
-=== Function 5: Implementing `call_ai_model()`
+=== Function 5: Implementing `suggest_improvements()`
+
+* Locate the `suggest_improvements()` function
+
+* **Highlight the entire function** from `@app.route` through `pass`, including the task-finding logic that's already there
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
++
+[source,role="execute"]
+----
+Complete this function to:
+1. Create a prompt: "Given this task - Title: {task['title']}, Description: {task['description']}, Priority: {task['priority']} - provide 3 specific, actionable next steps or improvements."
+2. Call call_ai_model() with the prompt
+3. Return JSON with 'suggestions' field containing the AI response
+4. Handle any errors from call_ai_model() and return appropriate error response
+
+Note: The task-finding logic is already implemented in the function (it searches through the 'tasks' global list). You only need to complete the TODO section for creating the prompt and calling the AI.
+----
+
+* **Review the code** and ensure it properly calls the `call_ai_model()` function
+
+* **Copy and paste** the implementation into your `app.py` file
+
+=== Function 6: Implementing `analyze_tasks()`
+
+The final function brings everything together.
+
+* Locate the `analyze_tasks()` function
+
+* **Highlight the entire function** from `@app.route` through `pass`, including all TODO comments
+
+* **Right-click** → **Continue** → **"Add to chat"**
+
+* In the Continue chat, type:
++
+[source,role="execute"]
+----
+Complete this function to:
+1. Get analysis_type from request JSON
+2. Create prompts based on analysis_type:
+   - "priority": "Here are my tasks: {task list}. Which should I prioritize and why?"
+   - "completion": "Here are my tasks: {task list}. Estimate how long these will take and suggest an order."
+   - "overview": "Here are my tasks: {task list}. Provide a brief overview and insights."
+3. Format tasks as a readable list in the prompt
+4. Call call_ai_model() with the prompt
+5. Return JSON with 'analysis' field
+6. Handle errors appropriately
+
+Remember: 'tasks' is a global list variable defined at the top of the file. You need to iterate through it to build a formatted task list for the AI prompt.
+----
+
+* **Review the code** to ensure it handles all three analysis types correctly
+
+* **Copy and paste** the implementation into your `app.py` file
+
+=== Function 7: Implementing `call_ai_model()`
 
 This is a critical function that interfaces with your AI model. Let's be very specific.
 
@@ -234,62 +291,6 @@ Remember: AI_MODEL_URL, AI_MODEL_NAME, and AI_API_TOKEN are global configuration
 
 * **Copy and paste** the implementation into your `app.py` file
 
-=== Function 6: Implementing `suggest_improvements()`
-
-* Locate the `suggest_improvements()` function (around line 86)
-
-* **Highlight the entire function** from `@app.route` through `pass`, including the task-finding logic that's already there
-
-* **Right-click** → **Continue** → **"Add to chat"**
-
-* In the Continue chat, type:
-+
-[source,role="execute"]
-----
-Complete this function to:
-1. Create a prompt: "Given this task - Title: {task['title']}, Description: {task['description']}, Priority: {task['priority']} - provide 3 specific, actionable next steps or improvements."
-2. Call call_ai_model() with the prompt
-3. Return JSON with 'suggestions' field containing the AI response
-4. Handle any errors from call_ai_model() and return appropriate error response
-
-Note: The task-finding logic is already implemented in the function (it searches through the 'tasks' global list). You only need to complete the TODO section for creating the prompt and calling the AI.
-----
-
-* **Review the code** and ensure it properly calls the `call_ai_model()` function
-
-* **Copy and paste** the implementation into your `app.py` file
-
-=== Function 7: Implementing `analyze_tasks()`
-
-The final function brings everything together.
-
-* Locate the `analyze_tasks()` function (around line 111)
-
-* **Highlight the entire function** from `@app.route` through `pass`, including all TODO comments
-
-* **Right-click** → **Continue** → **"Add to chat"**
-
-* In the Continue chat, type:
-+
-[source,role="execute"]
-----
-Complete this function to:
-1. Get analysis_type from request JSON
-2. Create prompts based on analysis_type:
-   - "priority": "Here are my tasks: {task list}. Which should I prioritize and why?"
-   - "completion": "Here are my tasks: {task list}. Estimate how long these will take and suggest an order."
-   - "overview": "Here are my tasks: {task list}. Provide a brief overview and insights."
-3. Format tasks as a readable list in the prompt
-4. Call call_ai_model() with the prompt
-5. Return JSON with 'analysis' field
-6. Handle errors appropriately
-
-Remember: 'tasks' is a global list variable defined at the top of the file. You need to iterate through it to build a formatted task list for the AI prompt.
-----
-
-* **Review the code** to ensure it handles all three analysis types correctly
-
-* **Copy and paste** the implementation into your `app.py` file
 
 Congratulations! You've now completed all the functions using Continue.dev!
 
@@ -301,7 +302,7 @@ Before deploying to OpenShift, let's test locally in your Dev Spaces environment
 +
 [source,bash]
 ----
-cd /projects/handson-llmaas-showroom/exercises/05-code-development
+cd /projects/handson-llmaas-code-development
 ----
 
 * Install dependencies:
@@ -315,13 +316,13 @@ pip install -r requirements.txt
 +
 [source,bash,subs="attributes"]
 ----
-export AI_MODEL_URL="http://granite-instruct-vllm.{user}-ai-models.svc.cluster.local:8000/v1/chat/completions"
+export AI_MODEL_URL="https://granite-33-8b-instruct.llm-hosting.svc.cluster.local/v1/chat/completions"
 export AI_MODEL_NAME="granite-3.3-8b-instruct"
 export AI_API_TOKEN="your-api-token-here"
 export PORT=8080
 ----
 +
-NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform (the same token you used in the Continue configuration in Module 2.1)
+NOTE: Replace `your-api-token-here` with your actual API token from the MaaS platform (the same token you used in the Continue configuration in xref:module-02-01-code-assistant.adoc#code-asst[Module 2.1: Coding with AI])
 
 * Run the application:
 +
