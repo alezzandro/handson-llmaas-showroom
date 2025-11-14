@@ -33,11 +33,11 @@ In the **Docling Web Client** under **Input Sources** enter the following URL:
 https://www.redhat.com/en
 ----
 
-The click on **Process URL(s)** leaving all options at default.
-
-This will convert the HTML site to Markdown.
+The click on **Process URL(s)** leaving all options at default, this will convert the HTML site to Markdown.
 
 image::03/04-docling_process.png[]
+
+Now experiment with other document input and output formats, you can also download the results.
 
 == Outlook
 
