@@ -4,3 +4,46 @@
 = Module 3.4: Docling
 
 == Docling
+
+In this exercise we will use a Docling to convert documents to a format that is more convenient during a tokenization process like Markdown.
+
+=== Creating the Docling application
+
+Follow these simple steps to create the Code Server application
+
+* Click on `Create a new application`
+* Select `Docling for Parasol AI Studio`
+* Enter `docling` as the name
+* Hit `Create Application`
+
+The application is shown as **starting** now
+
+image::03/04-docling_starting.png[]
+
+A few moments later an **open** link will appear
+
+image::03/04-docling_open.png[]
+
+=== Processing documents with the Docling Web Client
+
+In the **Docling Web Client** under **Input Sources** enter the following URL:
+
+[source,bash,role=execute,subs=attributes+]
+----
+https://www.redhat.com/en
+----
+
+The click on **Process URL(s)** leaving all options at default.
+
+This will convert the HTML site to Markdown.
+
+image::03/04-docling_process.png[]
+
+== Outlook
+
+Docling offers much more functionality that what can be demonstrated as part of this lab:
+
+* REST API for automation
+* Advanced PDF processing powered by a specialized ML model
+* Asynchrounous processing of documents for data ingestion pipelines
+* Conversion from HTML, PDF, Excel etc to Markdown, HTML
