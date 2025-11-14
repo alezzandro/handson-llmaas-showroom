@@ -4,3 +4,71 @@
 = Module 3.5: Stable Diffusion
 
 == Stable Diffusion
+
+In this exercise we will use a Stable Diffusion to generate images via a simple prompt interface
+
+=== Creating the Stable Diffusion application
+
+Follow these simple steps to create the Stable Diffusion application
+
+* Click on `Create a new application`
+* Select `Stable Diffusion Studio for Parasol AI Studio`
+* Enter `sdxl` as the name
+* Hit `Create Application`
+
+The application is shown as **starting** now
+
+image::03/05-sdxl_starting.png[]
+
+A few moments later an **open** link will appear
+
+image::03/05-sdxl_open.png[]
+
+=== Generating images with Stable Diffusion
+
+On first usage you will be greated with a disclaimer, please click on **Accept** to proceed.
+
+Under **Parameters/Prompt** enter the following text
+
+[source,role="execute"]
+----
+A red-tri Australien Shepherd sleeping on his pillow, photo, 4k
+----
+
+To have a higher quality image, use the following settings:
+
+* **Guidance Scale**: 16
+* **Number of Inference Steps**: 80
+
+You can leave the remaining settings as is.
+
+Now click on **Generate the image**
+
+image::03/05-sdxl_generate.png[]
+
+The final result looks like this
+
+image::03/05-sdxl_generate_result.png[]
+
+Now you can experiment with you own settings and prompts.
+
+Also try out different styles apart from photo:
+
+* **Comic** for comic like results
+
+image::03/05-sdxl_generate_comic_result.png[]
+
+* **Anime**
+
+image::03/05-sdxl_generate_anime_result.png[]
+
+* **Line Art**
+
+image::03/05-sdxl_generate_line_art_result.png[]
+
+Or any other of 108 styles listed https://stable-diffusion-art.com/sdxl-styles/[here].
+
+
+== Recap: What you just did
+
+Now we stepped into the shoes of the *Marketing Team* and generated some images according to our needs according to an easy prompt and simple fine tuning parameters.
