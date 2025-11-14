@@ -35,7 +35,7 @@ This insight enables:
 
 * Go to your 3Scale Developer Portal dashboard:
 
-https://maas.apps.{openshift_cluster_ingress_domain}/[https://maas.apps.{openshift_cluster_ingress_domain}/]
+https://maas.{openshift_cluster_ingress_domain}/[https://maas.{openshift_cluster_ingress_domain}/]
 
 * Click on the `Statistics` tab at the top.
 +
