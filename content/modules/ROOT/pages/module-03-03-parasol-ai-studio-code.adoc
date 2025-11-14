@@ -1,6 +1,15 @@
 :imagesdir: ../assets/images
 
 [#parasol-ai-studio-code]
-= Module 3.3: Code
+= Module 3.3: Code Server
 
 == Code
+
+In this exercise we will use a lighter version of `VS Code` running in a container in combination with `continue.dev` similar to the exercise in xref:module-02-01-code-assistant.adoc#code-asst[Module 2.1: Code Assistant]
+
+=== Creating the Code application
+
+* Click on `Create a new application`
+* Select `Code Server for Parasol AI Studio`
+* Enter `code` as the name
+* Hit `Create Application`
