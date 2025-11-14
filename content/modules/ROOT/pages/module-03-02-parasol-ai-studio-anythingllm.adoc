@@ -4,3 +4,153 @@
 = Module 3.2: AnythingLLM
 
 == AnythingLLM Workbench
+
+We will be using AnythingLLM to explore the following use-cases:
+
+* Generic Chatbot
+* Conversation with a PDF document
+
+=== Creating the AnythingLLM application
+
+If not done already as part of the introduction to Parasol AI Studio, go to the Parasol AI Studio site at https://my-ai-studio-redhat-ods-applications.{openshift_cluster_ingress_domain}.
+
+Now you can create the **AnythingLLM** application by following these steps:
+
+* Click on `Create an application`
++
+image:03/01-create_application_1.png[]
+* Under `Type` select `AnythingLLM`
+image:03/01-application_options.png[]
+* Leave the version as is and use `anythingllm` as the name
+* Click on `Create application`
++
+image:03/01-create_application_2.png[]
++
+The application will be starting
++
+image::03/02-anythingllm_starting.png[]
++
+After a short while a link to open the application it will appear
++
+image::03/02-anythingllm_open.png[]
+
+* Click on `open` and login with {user}/{password}
+
+
+=== Quick Tour
+
+After you have started the application you will be greated with the main dashboard of AnythingLLM.
+
+image::03/02-anythingllm_main.png[]
+
+
+==== Settings
+
+You can access the settings by click on the `wrench` symbol on the lower left.
+
+To leave the settings, click on the `return` icon also on the lower left.
+
+While there are many interesting areas to explore on the AnythingLLM settings we will focus on the LLM and the Vector Database for now.
+
+===== LLM
+
+The LLM settings can be found at `AI Providers/LLM`
+
+image::03/02-anythingllm_settings_llm.png[]
+
+The information display includes:
+
+* `LLM Provider`: We are using `Generic OpenAI` for this Lab. 
+* `URL`: This is preconfigured with the URL on 3scale API Management.
+* `API Key`: Please note that this is the same key as you have used in xref:module-02-01-code-assistant.adoc#code-asst[Module 1.1: Coding with AI], If you haven't run this module, it was automatically created for you.
+* `Chat Model Name`: This has been determined automatically from the Base URL.
+* `Token context window`: Set to 4096 by default
+* `Max Tokens`: Set to 2048 by default 
+
+===== Vector Database
+
+The Vector Database settings can be found at `AI Providers/Vector Database`
+
+image::03/02-anythingllm_settings_vectordb.png[]
+
+* `Vector Database Provider`: For this lab we are using Weaviate
+* `Weaviate Endpoint`: Cluster internal URL to the Weaviate service deployed on OpenShift.
+* `API Key`: Left empty as we are not using API keys for Weaviate
+
+=== Chat Bot
+
+Now that we got familiar with AnythingLLM it is time for some conversation about AI.
+
+First, create a workspace by selecting `+ New Workspace` and entering *Red Hat OpenShift AI* followed by `Save`.
+
+image::03/02-anythingllm_create_workspace.png[]
+
+Let's start by asking *What is Red Hat OpenShift AI*
+
+image::03/02-anythingllm_chat_first_message.png[]
+
+and the *Chat Bot* will come back with an answer.
+
+Feel free to ask it anything that comes to your mind.
+
+=== Chat Bot with RAG
+
+To have a more qualified talk we will be embedding a PDF into the chat using RAG (Retrieval Augmented Generative AI).
+
+For demonstration purpose you can use https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.25/pdf/getting_started_with_red_hat_openshift_ai_self-managed/Red_Hat_OpenShift_AI_Self-Managed-2.25-Getting_started_with_Red_Hat_OpenShift_AI_Self-Managed-en-US.pdf[Red Hat OpenShift AI Self-Managed], download this document to your PC.
+
+To embed the document click on the `paperclip` icon in the chat window and upload the document
+
+image::03/02-anythingllm_chat_document_attach.png[]
+
+The next question to ask is *How can I get started with OpenShift AI*, also this will be answered by the chat bot.
+
+Please note that you will also get information about citations from the embedded document.
+
+image::03/02-anythingllm_chat_document_citation.png[]
+
+Explore this functionality by embedding other documents of your liking!
+
+Time to checkout what was stored on the Vector Database:
+
+* Open the OpenShift Console at https://console-openshift-console.{openshift_cluster_ingress_domain} and login with {user}/{password}
+* Open a `Web Terminal` by clicking on `>_` on the upper right side
++
+image::03/02-web_terminal.png[]
+* To start the terminal select `{user}-parasol-ai` as the project, click on `Start`
++
+image::03/02-web_terminal_initialize.png[]
+and a `bash` terminal should be shown
++
+image::03/02-web_terminal_prompt.png[]
+
+As a first step, let's get some information about the schema by running the following command
+
+[source,role=execute]
+----
+curl -s http://weaviate.weaviate.svc/v1/schema | jq
+----
+
+You should see the following information:
+
+image::03/02-weaviate_schema.png[]
+
+Notice that the class was derived from the name we gave the chat earlier. Note down the value for `class` as we will need it to query Weaviate for entries.
+
+Weaviate offers a REST and a GraphQL interface, for ease-of-use we will use REST for the moment to query all objects available:
+[source,role=execute]
+----
+curl -s http://weaviate.weaviate.svc/v1/objects | jq | less
+----
+This should return information like this
+
+image::03/02-weaviate_objects.png[]
+
+== Recap: What you just did
+
+Now we stepped into the shoes of an *Knowledge Worker*
+
+* Used an LLM for a Chat Bot application
+* Embedded documents into the Chat Bot using RAG.
+
+Notice that everything has been setup automatically for the user with no hassle.
