@@ -1,0 +1,793 @@
+:imagesdir: ../assets/images
+
+[#cpu-model-deployment]
+= Module 4: Deploying a CPU-Optimized Model with Custom vLLM Runtime
+
+== Introduction
+
+Welcome to a hands-on exploration of model deployment flexibility!
+
+In the previous modules, you've worked with GPU-accelerated models and explored pre-configured AI applications. Now, you'll step back into the platform engineer role to deploy a specialized model that runs entirely on CPU resources - perfect for cost-effective deployments, edge scenarios, or when GPU resources are constrained.
+
+This module demonstrates the versatility of OpenShift AI's model serving capabilities. You'll deploy **Qwen2.5-0.5B-Instruct**, a compact yet powerful language model, using a custom vLLM runtime that's been optimized for CPU execution.
+
+== Why CPU-Based Model Deployment Matters
+
+Not every AI workload requires GPU acceleration. CPU-based deployments offer several advantages:
+
+* **Cost Efficiency**: CPU resources are significantly less expensive than GPU instances
+* **Resource Availability**: CPUs are more readily available across cloud and on-premises infrastructure
+* **Edge Deployment**: Many edge environments lack GPU resources but have abundant CPU capacity
+* **Development and Testing**: CPU-based models are ideal for development, testing, and proof-of-concept work
+* **Small Model Optimization**: Compact models like Qwen2.5-0.5B can deliver impressive performance on CPU alone
+
+OpenShift AI's flexible runtime system allows you to deploy the same model serving infrastructure whether you're using GPUs or CPUs - the same APIs, the same tooling, just different resource configurations.
+
+== About Qwen2.5-0.5B-Instruct
+
+**Qwen2.5-0.5B-Instruct** is part of the Qwen2.5 family of language models developed by Alibaba Cloud. Despite its compact size (only 500 million parameters), this model delivers:
+
+* **Instruction Following**: Fine-tuned to follow natural language instructions
+* **Multi-Language Support**: Strong performance across multiple languages
+* **Efficient Inference**: Designed for resource-constrained environments
+* **OpenAI-Compatible API**: Works with standard chat completion interfaces
+
+This makes it an excellent choice for scenarios where you need language understanding capabilities without the resource requirements of larger models.
+
+== What You'll Accomplish
+
+In this module, you will:
+
+* Access the OpenShift AI dashboard and navigate to model serving
+* Create a new model server using the pre-configured CPU-optimized vLLM runtime
+* Deploy the Qwen2.5-0.5B-Instruct model with CPU-only resources
+* Configure the deployment with appropriate resource limits
+* Verify the deployment and test the model endpoint
+* Understand the differences between GPU and CPU deployment configurations
+
+Your platform administrator has already configured the custom vLLM runtime image that supports CPU execution. You'll focus on the deployment process itself.
+
+== Step 1: Access OpenShift AI Dashboard
+
+Let's begin by accessing the OpenShift AI dashboard where you'll manage your model deployment.
+
+* Navigate to the OpenShift AI Dashboard: https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}[https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/,window=_blank]
+
+* Log in with your credentials:
+** Username: `{user}`
+** Password: `{password}`
+
+* You should see the OpenShift AI dashboard home page with various options for data science projects, model serving, and more.
+
+[.bordershadow]
+image::07/01-rhoai-dashboard-home.png[OpenShift AI Dashboard Home,width=75%]
+
+== Step 2: Navigate to Model Serving
+
+OpenShift AI provides centralized model serving capabilities through the dashboard.
+
+* In the left navigation menu, click on **Model Serving**
+
+* This opens the model serving overview page where you can see all deployed models across your projects
+
+[.bordershadow]
+image::07/02-model-serving-overview.png[Model Serving Overview,width=75%]
+
+== Step 3: Select Your Project
+
+You'll deploy this model in your existing project namespace.
+
+* Look for the project selector dropdown (typically at the top of the page)
+
+* Select your project: `{user}-ai-models`
++
+NOTE: This is the same project where you deployed the Granite model in Module 1. You can have multiple models deployed in the same project.
+
+* Once selected, you should see any existing model servers in this project
+
+[.bordershadow]
+image::07/03-project-selection.png[Select Project,width=75%]
+
+== Step 4: Create a New Model Server
+
+A model server is a deployment that hosts one or more models. Each server can have its own runtime configuration.
+
+* Click the **Deploy model** button (or **Add model server** if this is your first deployment in this interface)
+
+* You'll see a form to configure your model server
+
+* In the **Model server name** field, enter: `qwen-cpu-server`
+
+* For **Serving runtime**, select the custom CPU-optimized vLLM runtime from the dropdown
++
+Look for: **vLLM CPU Runtime** or similar (the exact name depends on how your administrator configured it)
++
+[.bordershadow]
+image::07/04-select-runtime.png[Select vLLM CPU Runtime,width=75%]
+
+* Leave **Model route** enabled (checked) to create an external route for API access
+
+* Set the **Number of model replicas** to `1`
++
+For CPU-based models, horizontal scaling is often more practical than vertical scaling
+
+== Step 5: Configure Model Server Resources
+
+CPU-based models require different resource configurations than GPU models.
+
+* Expand the **Resources** section if it's collapsed
+
+* Configure the following resource limits:
++
+[source,yaml]
+----
+CPU Request: 2
+CPU Limit: 4
+Memory Request: 4Gi
+Memory Limit: 8Gi
+----
+
+* These values ensure:
+** Sufficient CPU cores for model inference (2-4 cores)
+** Adequate memory for loading the 0.5B parameter model (~4-8GB)
+** Room for concurrent requests and runtime overhead
+
+[.bordershadow]
+image::07/05-configure-resources.png[Configure Resources,width=75%]
+
+NOTE: Unlike GPU deployments, CPU-based deployments don't require GPU resource specifications. The vLLM runtime automatically detects the absence of GPUs and optimizes for CPU execution.
+
+== Step 6: Deploy the Model
+
+Now you'll specify which model to deploy on your model server.
+
+* Scroll down to the **Deploy model** section
+
+* In the **Model name** field, enter: `qwen-0.5b-instruct`
++
+This is the name that will appear in API requests
+
+* For **Model framework**, select **vLLM** (should be pre-selected based on your runtime choice)
+
+* In the **Model location** section, you need to specify where the model is stored
+
+* Choose **Model location type**: **Object storage** or **Model registry** depending on your environment
++
+For this exercise, we'll use a pre-configured model from a container image
+
+* Select **Existing data connection** or **New data connection** as appropriate
+
+* In the **Path** or **Model path** field, enter the model identifier:
++
+[source,text]
+----
+quay.io/redhat-ai-services/modelcar-catalog:qwen2.5-0.5b-instruct
+----
++
+This references a pre-built model image that contains the Qwen2.5-0.5B-Instruct model in vLLM-compatible format
+
+[.bordershadow]
+image::07/06-specify-model-location.png[Specify Model Location,width=75%]
+
+== Step 7: Configure Model Parameters
+
+vLLM supports various configuration parameters for optimizing inference.
+
+* Expand the **Model parameters** or **Advanced settings** section
+
+* Configure the following parameters for CPU optimization:
++
+[source,yaml]
+----
+--max-model-len: 2048
+--max-num-seqs: 8
+----
++
+These parameters:
+** `--max-model-len`: Limits the maximum sequence length (context window) to reduce memory usage
+** `--max-num-seqs`: Controls how many sequences can be processed in parallel
+
+[.bordershadow]
+image::07/07-model-parameters.png[Model Parameters,width=75%]
+
+TIP: For CPU deployments, conservative values for max-model-len and max-num-seqs help ensure stable performance and prevent memory exhaustion.
+
+== Step 8: Review and Deploy
+
+Before deploying, review your configuration.
+
+* Review the summary of your configuration:
+** Model server name: `qwen-cpu-server`
+** Runtime: vLLM CPU Runtime
+** Model name: `qwen-0.5b-instruct`
+** Model location: `quay.io/redhat-ai-services/modelcar-catalog:qwen2.5-0.5b-instruct`
+** Resources: 2-4 CPU, 4-8Gi memory
+
+* Click **Deploy** (or **Create** depending on the interface)
+
+* OpenShift AI will now:
+** Create the model server deployment
+** Pull the model image from the registry
+** Start the vLLM runtime with CPU optimization
+** Load the Qwen2.5-0.5B model into memory
+** Expose the inference endpoint
+
+[.bordershadow]
+image::07/08-deployment-initiated.png[Deployment Initiated,width=75%]
+
+== Step 9: Monitor Deployment Progress
+
+The deployment process may take several minutes as the model image is pulled and loaded.
+
+* You should see the model server appear in the model serving list with a status indicator
+
+* Initial status will show **Creating** or **Starting**
+
+* Watch the status transition through:
+** **Pending**: Kubernetes is scheduling the pod
+** **ContainerCreating**: The container image is being pulled
+** **Running**: The vLLM runtime is loading the model
+
+[.bordershadow]
+image::07/09-deployment-progress.png[Deployment Progress,width=75%]
+
+* You can click on the model server name to see more details
+
+* Check the **Events** or **Logs** tab to monitor the startup process
+
+TIP: CPU-based model loading is generally faster than GPU models since there's no GPU initialization overhead, but initial container image pull may take time on first deployment.
+
+== Step 10: Verify Deployment Status
+
+Once deployment completes, verify everything is ready.
+
+* Wait until the status shows **Ready** or **Available** with a green checkmark
+
+* You should see:
+** **Status**: Running/Ready
+** **Replicas**: 1/1
+** **Inference endpoint**: A URL for making API requests
+
+[.bordershadow]
+image::07/10-deployment-ready.png[Deployment Ready,width=75%]
+
+* The inference endpoint URL will look something like:
++
+[source,text]
+----
+https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1
+----
+
+* This is your OpenAI-compatible endpoint for the Qwen model
+
+== Step 11: Test the Model with a Jupyter Notebook
+
+Now that your CPU-optimized model is deployed, let's test it using a Jupyter notebook with LangChain. You'll create a workbench in OpenShift AI and use a pre-built notebook that demonstrates how to interact with the model.
+
+=== Create a Data Science Workbench
+
+* Return to the OpenShift AI Dashboard: https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}[https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/,window=_blank]
+
+* In the left navigation, click on **Data Science Projects**
+
+* You should see your existing project `{user}-ai-models` (the same namespace where your model is deployed)
+
+* Click on the project name to open it
+
+[.bordershadow]
+image::07/11a-open-project.png[Open Data Science Project,width=75%]
+
+* In the project view, locate the **Workbenches** section and click **Create workbench**
+
+[.bordershadow]
+image::07/11b-create-workbench.png[Create Workbench,width=75%]
+
+* Configure the workbench with the following settings:
+** **Name**: `qwen-test-notebook`
+** **Notebook image**: Select **Standard Data Science** (this includes Python, Jupyter, and common ML libraries)
+** **Container size**: **Small** (CPU and memory requirements are minimal for testing)
+** **Cluster storage**: Create new persistent storage with **5Gi** (to store notebooks and code)
+** Leave other settings at their defaults
+
+[.bordershadow]
+image::07/11c-workbench-config.png[Workbench Configuration,width=75%]
+
+* Click **Create workbench**
+
+* Wait for the workbench to start (status will change from "Starting" to "Running")
++
+This may take 1-2 minutes as the notebook image is pulled and the container starts
+
+[.bordershadow]
+image::07/11d-workbench-starting.png[Workbench Starting,width=75%]
+
+* Once running, click **Open** to launch the Jupyter interface
+
+[.bordershadow]
+image::07/11e-workbench-running.png[Workbench Running,width=75%]
+
+=== Clone the Workshop Repository
+
+You'll now clone the same Gitea repository from the previous modules to access the exercise notebook.
+
+* In the Jupyter interface, click on the **Git** icon in the left sidebar (or use the menu: **Git → Clone a Repository**)
+
+[.bordershadow]
+image::07/11f-jupyter-git.png[Jupyter Git Interface,width=75%]
+
+* Enter your Gitea repository URL:
++
+[source,text,subs="attributes"]
+----
+{gitea-repo-url}
+----
+
+* If prompted for credentials, enter:
+** Username: `{user}`
+** Password: `{password}`
+
+[.bordershadow]
+image::07/11g-git-clone.png[Git Clone Dialog,width=75%]
+
+* Click **Clone**
+
+* The repository will be cloned into your workspace. You should see the `handson-llmaas-showroom` folder appear in the file browser
+
+=== Access the Exercise 07 Notebook
+
+* In the Jupyter file browser, navigate to:
++
+[source,text]
+----
+handson-llmaas-showroom/exercises/07-cpu-model-test/
+----
+
+* You should see a Python notebook file: `test_qwen_langchain.ipynb`
+
+[.bordershadow]
+image::07/11h-exercise-folder.png[Exercise 07 Folder,width=75%]
+
+* Double-click the notebook to open it
+
+[.bordershadow]
+image::07/11i-notebook-opened.png[Notebook Opened,width=75%]
+
+=== Understanding the Notebook
+
+The notebook demonstrates how to interact with your deployed Qwen model using **LangChain**, a popular framework for building LLM applications. Let's review the key sections:
+
+**Cell 1: Install Dependencies**
+
+The first cell installs the required Python packages:
+
+[source,python]
+----
+!pip install langchain langchain-openai openai
+----
+
+This installs:
+
+* `langchain`: The core LangChain framework
+* `langchain-openai`: LangChain's OpenAI-compatible chat model integration
+* `openai`: The OpenAI Python client (works with OpenAI-compatible APIs)
+
+**Cell 2: Import Libraries**
+
+[source,python]
+----
+from langchain_openai import ChatOpenAI
+from langchain.schema import HumanMessage, SystemMessage
+import os
+----
+
+These imports provide:
+
+* `ChatOpenAI`: LangChain wrapper for OpenAI-compatible chat models
+* Message types for constructing conversations
+* Environment variable access
+
+**Cell 3: Configure the Model Connection**
+
+This is the most important cell - it configures the connection to your deployed Qwen model:
+
+[source,python]
+----
+# Configure the model endpoint
+model = ChatOpenAI(
+    model_name="qwen-0.5b-instruct",
+    openai_api_base="https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1",
+    openai_api_key="not-needed",  # vLLM doesn't require authentication by default
+    temperature=0.7,
+    max_tokens=200
+)
+----
+
+Key parameters:
+
+* `model_name`: Must match the model name from your deployment (`qwen-0.5b-instruct`)
+* `openai_api_base`: The inference endpoint URL from your model server
+* `openai_api_key`: Set to "not-needed" since the model server doesn't require authentication (internal to cluster)
+* `temperature`: Controls randomness (0.7 is balanced between creative and focused)
+* `max_tokens`: Limits the response length
+
+**Cell 4: Test a Simple Query**
+
+[source,python]
+----
+# Test with a simple question
+messages = [
+    SystemMessage(content="You are a helpful AI assistant."),
+    HumanMessage(content="What is OpenShift?")
+]
+
+response = model.invoke(messages)
+print(response.content)
+----
+
+This demonstrates:
+
+* Creating a conversation with system and user messages
+* Invoking the model with LangChain's `.invoke()` method
+* Extracting and printing the response
+
+**Cell 5: Test with a More Complex Query**
+
+[source,python]
+----
+# Test with a more complex question about Kubernetes
+messages = [
+    SystemMessage(content="You are an expert in container orchestration and cloud-native technologies."),
+    HumanMessage(content="Explain the difference between a Deployment and a StatefulSet in Kubernetes. Keep it concise.")
+]
+
+response = model.invoke(messages)
+print(response.content)
+----
+
+This shows:
+
+* Using different system prompts to guide model behavior
+* More technical queries relevant to OpenShift environments
+* How system messages affect responses
+
+**Cell 6: Test Conversation Context**
+
+[source,python]
+----
+# Test multi-turn conversation
+messages = [
+    SystemMessage(content="You are a helpful AI assistant."),
+    HumanMessage(content="What are the three main benefits of using CPU-based model deployments?"),
+]
+
+response = model.invoke(messages)
+print("Assistant:", response.content)
+
+# Follow-up question
+messages.append(response)
+messages.append(HumanMessage(content="Can you elaborate on the cost benefits?"))
+
+response2 = model.invoke(messages)
+print("\nAssistant:", response2.content)
+----
+
+This demonstrates:
+
+* Maintaining conversation context across multiple turns
+* How LangChain handles message history
+* Building interactive conversations
+
+=== Configure the Notebook for Your Environment
+
+Before running the notebook, you need to update the model endpoint URL to match your deployment.
+
+* In **Cell 3** of the notebook, locate the `openai_api_base` parameter
+
+* Update the URL to match your environment:
++
+[source,python,subs="attributes"]
+----
+openai_api_base="https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1"
+----
++
+Replace `{user}` with your actual username (e.g., `user1`, `user2`, etc.)
+
+[.bordershadow]
+image::07/11j-configure-endpoint.png[Configure Endpoint URL,width=75%]
+
+NOTE: The notebook is configured to work with the model server running in the same namespace, so no authentication is required. The workbench can access the model service directly via the internal cluster network.
+
+=== Run the Notebook
+
+Now let's execute the notebook to test your model!
+
+* Click on the first cell and select **Run → Run All Cells** from the menu (or press `Shift+Enter` on each cell sequentially)
+
+[.bordershadow]
+image::07/11k-run-cells.png[Run All Cells,width=75%]
+
+* Watch as each cell executes:
+** Cell 1 installs the dependencies (may take 30-60 seconds)
+** Cell 2 imports libraries (should be instant)
+** Cell 3 configures the model connection (instant)
+** Cell 4 sends the first query and displays the response
+** Cell 5 sends a technical query
+** Cell 6 demonstrates multi-turn conversation
+
+* You should see output from the model after each inference cell:
+
+[.bordershadow]
+image::07/11l-notebook-output.png[Notebook Output,width=75%]
+
+TIP: If you encounter connection errors, verify that the model endpoint URL is correct and that the model server pod is running in the same namespace.
+
+=== Analyze the Results
+
+Review the model's responses:
+
+* **Response Quality**: How well does the compact 0.5B model answer questions?
+* **Latency**: Notice the response time for CPU-based inference (typically 1-3 seconds)
+* **Context Handling**: Observe how well the model maintains conversation context
+
+The notebook demonstrates that even a small CPU-based model can provide useful responses for many use cases, especially when:
+
+* Questions are well-scoped and specific
+* You don't need the depth of larger models
+* Cost and resource efficiency are priorities
+* Response time of 1-3 seconds is acceptable
+
+=== Why LangChain?
+
+This notebook uses LangChain because it:
+
+* **Simplifies LLM Integration**: Provides a consistent interface across different model providers
+* **Handles Message Formatting**: Automatically formats messages for OpenAI-compatible APIs
+* **Manages Conversation Context**: Makes it easy to build multi-turn conversations
+* **Enables Advanced Patterns**: Supports chains, agents, RAG, and other LLM application patterns
+* **Works with OpenAI-Compatible APIs**: Your vLLM deployment is fully compatible
+
+This is the same framework you might use in production applications, making this a realistic example of how developers would integrate with your deployed models.
+
+== Step 12: Inspect the Deployment in OpenShift Console
+
+Let's look at the underlying Kubernetes resources to understand what was created.
+
+* Navigate to the OpenShift Console: https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]
+
+* Switch to **Developer** perspective (top-left dropdown)
+
+* Select your project: `{user}-ai-models`
+
+* Click on **Topology** to see a visual representation
+
+* You should see a new deployment for `qwen-cpu-server`
+
+[.bordershadow]
+image::07/12-topology-view.png[Topology View,width=75%]
+
+* Click on the deployment to open the details panel:
+** **Pods**: Shows 1 pod running with CPU resources
+** **Resources**: No GPU allocation (CPU-only)
+** **Routes**: External endpoint for API access
+
+== Step 13: View Pod Details and Resource Usage
+
+Understanding resource consumption helps optimize future deployments.
+
+* In the Topology view, click on the pod circle, then click **View Logs**
+
+* You should see vLLM startup logs indicating:
++
+[source,text]
+----
+INFO: Using CPU for inference
+INFO: Loading model from /mnt/models/qwen-0.5b-instruct
+INFO: Model loaded successfully
+INFO: Starting API server on 0.0.0.0:8000
+----
+
+[.bordershadow]
+image::07/13-pod-logs.png[Pod Logs,width=75%]
+
+* Navigate to **Observe** → **Metrics** in the OpenShift Console
+
+* Select your project and pod to view resource usage:
+** CPU utilization during inference
+** Memory consumption
+** Network traffic
+
+[.bordershadow]
+image::07/14-resource-metrics.png[Resource Metrics,width=75%]
+
+== Step 14: Compare with GPU Deployment
+
+Let's reflect on the differences between this CPU deployment and the GPU deployment from Module 1.
+
+[cols="1,2,2",options="header"]
+|===
+|Aspect |GPU Deployment (Granite) |CPU Deployment (Qwen)
+
+|**Hardware**
+|Requires GPU nodes with NVIDIA drivers
+|Runs on any CPU node
+
+|**Resource Spec**
+|`nvidia.com/gpu: 1` + CPU + Memory
+|CPU + Memory only
+
+|**Model Size**
+|Larger models (8B+ parameters)
+|Smaller models (0.5B-7B parameters)
+
+|**Inference Speed**
+|Very fast (milliseconds)
+|Moderate (hundreds of milliseconds)
+
+|**Cost**
+|Higher (GPU instance costs)
+|Lower (CPU instance costs)
+
+|**Throughput**
+|High concurrent requests
+|Moderate concurrent requests
+
+|**Use Cases**
+|Production, high-traffic applications
+|Development, testing, edge deployment
+|===
+
+Understanding these trade-offs helps you choose the right deployment strategy for your use case.
+
+== Understanding the Custom vLLM Runtime
+
+Your administrator pre-configured a custom vLLM runtime for CPU execution. Let's understand what makes this possible.
+
+=== What is a vLLM Runtime?
+
+A **runtime** in OpenShift AI is a container image that provides the model serving framework. The vLLM runtime includes:
+
+* **vLLM inference engine**: Optimized for high-throughput LLM serving
+* **OpenAI-compatible API server**: Standardized REST API
+* **Model loading logic**: Handles various model formats
+* **Resource optimization**: Adapts to available hardware (GPU or CPU)
+
+=== CPU-Specific Optimizations
+
+The custom CPU runtime includes:
+
+* **CPU-optimized kernels**: Inference operations optimized for x86_64 processors
+* **Memory management**: Efficient memory allocation for large models on CPU
+* **Batch processing**: Optimized batching for CPU execution
+* **No CUDA dependencies**: Removes GPU-specific libraries to reduce image size
+
+=== Runtime Configuration
+
+While you don't need to configure the runtime yourself, it's helpful to understand what your administrator set up:
+
+* **Base image**: Custom-built vLLM image without GPU dependencies
+* **Environment variables**: CPU-specific tuning parameters
+* **Resource requirements**: Minimum CPU and memory for the runtime
+* **API compatibility**: Ensures OpenAI API compatibility
+
+This abstraction allows you to focus on model deployment without worrying about low-level runtime details.
+
+== Best Practices for CPU Model Deployment
+
+Based on this deployment, here are key best practices:
+
+=== Model Selection
+
+* **Choose compact models**: Models under 7B parameters work well on CPU
+* **Quantized models**: 8-bit or 4-bit quantization significantly improves CPU performance
+* **Task-specific models**: Use specialized models for specific tasks rather than general-purpose large models
+
+=== Resource Configuration
+
+* **CPU allocation**: Start with 2-4 cores per replica, adjust based on latency requirements
+* **Memory sizing**: Allocate 2GB per billion parameters + 2-4GB overhead
+* **Replica count**: Prefer horizontal scaling over large vertical scaling
+
+=== Performance Optimization
+
+* **Reduce context length**: Use `--max-model-len` to limit context window
+* **Control batch size**: Set `--max-num-seqs` conservatively
+* **Enable caching**: vLLM's KV cache works on CPU too
+* **Monitor latency**: CPU inference is slower - adjust expectations and timeouts
+
+=== Use Case Alignment
+
+CPU deployments are ideal for:
+
+* **Development and testing**: Iterate quickly without GPU costs
+* **Low-traffic applications**: Internal tools, demos, proof-of-concepts
+* **Edge deployment**: IoT, retail, remote locations
+* **Cost-sensitive scenarios**: Startups, education, experimentation
+
+== Troubleshooting Common Issues
+
+=== Pod Stays in Pending State
+
+**Symptom**: Pod never starts, status shows "Pending"
+
+**Possible causes**:
+* Insufficient CPU resources in the cluster
+* Memory requests exceed available node capacity
+* Node selector constraints not met
+
+**Solutions**:
+* Check pod events: `oc describe pod <pod-name>`
+* Verify cluster resource availability: `oc describe nodes`
+* Reduce CPU/memory requests if necessary
+
+=== Out of Memory (OOM) Errors
+
+**Symptom**: Pod crashes with OOM error in logs
+
+**Possible causes**:
+* Model requires more memory than allocated
+* Context length too large
+* Too many concurrent sequences
+
+**Solutions**:
+* Increase memory limit in deployment configuration
+* Reduce `--max-model-len` parameter
+* Reduce `--max-num-seqs` parameter
+* Consider using a quantized model version
+
+=== Slow Inference Response
+
+**Symptom**: API requests take very long to complete
+
+**Expected behavior**:
+* CPU inference is naturally slower than GPU (10-100x)
+* First request may be slower (cold start)
+
+**Optimizations**:
+* Increase CPU allocation
+* Reduce `--max-model-len`
+* Use quantized models
+* Consider horizontal scaling for throughput (not latency)
+
+=== Model Loading Failures
+
+**Symptom**: Pod starts but model fails to load
+
+**Possible causes**:
+* Incorrect model path or image reference
+* Model format incompatible with vLLM
+* Network issues pulling model image
+
+**Solutions**:
+* Verify model image exists: `podman pull quay.io/redhat-ai-services/modelcar-catalog:qwen2.5-0.5b-instruct`
+* Check pod logs for specific error messages
+* Ensure model is in vLLM-compatible format
+
+== What You've Accomplished
+
+Congratulations! You've successfully:
+
+✅ **Deployed a CPU-optimized language model** using OpenShift AI's model serving capabilities
+
+✅ **Configured a custom vLLM runtime** for CPU execution (pre-configured by your admin)
+
+✅ **Set appropriate resource limits** for CPU-based inference
+
+✅ **Tested the model with LangChain** using a Jupyter notebook in OpenShift AI
+
+✅ **Understood the trade-offs** between GPU and CPU deployments
+
+✅ **Applied best practices** for CPU model serving
+
+You now have experience deploying models in both GPU and CPU environments - a critical skill for optimizing costs and resource utilization in production AI systems.
+
+== What's Next?
+
+You've now explored multiple deployment scenarios:
+
+* **Module 1**: GPU-accelerated models for high-performance inference
+* **Module 3**: Pre-configured AI applications with Parasol AI Studio
+* **Module 4** (this module): CPU-optimized models for cost-effective deployment
+
+In the next module, you'll shift to the **technical decision maker** role to explore **model usage analytics**. You'll learn how to monitor and analyze your model usage across the cluster, understand performance metrics, track API consumption, and make data-driven decisions about resource allocation and optimization.
+
+The flexibility of OpenShift AI allows you to mix and match deployment strategies based on your specific requirements - using GPUs where performance is critical and CPUs where cost efficiency matters most.

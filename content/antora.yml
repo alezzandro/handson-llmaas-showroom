@@ -1,5 +1,5 @@
 name: modules
-title: Private LLM as a Service - A Practical Introduction with OpenShift AI
+title: Generative AI with Parasol AI Studio - A Practical Introduction with OpenShift AI
 version: main
 nav:
   - modules/ROOT/nav.adoc
@@ -10,7 +10,7 @@ asciidoc:
     page-pagination: true
     experimental:
     numbered:
-    lab_name: "Private LLM as a Service - A Practical Introduction with OpenShift AI"
+    lab_name: "Generative AI with Parasol AI Studio - A Practical Introduction with OpenShift AI"
     guid: my-guid
     ssh_user: lab-user
     ssh_password: lab-user
@@ -18,7 +18,7 @@ asciidoc:
     minio-user: minio
     minio-pass: minio123
     minio-endpoint: http://minio.shared-minio.svc.cluster.local:9000/
-    user: user1
+    user: studentX
     password: openshift
     openshift_api_url: https://api.cluster-guid.guid.sandbox.opentlc.com:6443
     openshift_cluster_ingress_domain: apps.cluster-guid.guid.sandbox.opentlc.com

@@ -1,0 +1,91 @@
+:imagesdir: ../assets/images
+
+[#model-deployment]
+= Preparing your Data Science project
+
+Your first task as a Data Scientist begins: Creating a Data Science project on OpenShift AI. 
+
+== Getting connected to OpenShift AI
+
+// If you are accessing these instructions through the workshop, the information below will render properly with unique values. If you are accessing the instructions separately for your own cluster, you will see placeholder values instead.
+
+As a data scientist, you're now stepping into a live environment! OpenShift AI provides a web-based dashboard interface to deploy and manage models with ease. 
+
+Let's get connected.
+
+**Open the OpenShift AI Dashboard**
+
+* Click to open the following URL in a new tab or window and log in:
+** https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/[https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/,window=_blank]
+
+NOTE: At any point, you can access the OpenShift Container Platform web console by going to the following URL: https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]. 
+
+* Click on the `Login with OpenShift` button:
++
+[.bordershadow]
+image::01/02-login3.png[width="50%"]
+
+* Enter your credentials:
+** Your username: `{user}`
+** Your password: `{password}`
+
++
+[.bordershadow]
+image::01/02-login1.png[width="50%"]
+
+* After you authenticate, your browser window should look like this
++
+[.bordershadow]
+image::01/02-rhoai-front-page.png[width="75%"]
+
+You're now inside the control panel that data scientists and ML engineers use daily. Let's explore what's under the hood.
+
+[#openshift-ai-overview]
+== OpenShift AI Overview 
+
+Think of this as your toolbox. Each component maps to a key responsibility in operating an enterprise-ready AI platform.
+
+As a first task, you need to create a Data Science project.
+
+Click on the `Create a project` link in the `Data Science Project` section.
+[.bordershadow]
+image::01/02-create-datascience-project-1.png[width="50%"]
+and enter `studentX-dsp` as the name and press the `Create` button
+[.bordershadow]
+image::01/02-create-datascience-project-2.png[width="50%"]
+
+You should now see your newly created Data Science project and can explore the tabs across the top.
+
+[.bordershadow]
+image::01/02-project-tabs.png[width="50%"]
+
+Here's a quick rundown:
+
+* **Workbenches**: Where you can create and manage various development environments like JupyterLab, VSCode, or other custom Workbenches. It provides a user-friendly interface for data scientists to work with notebooks, libraries, and datasets.
+* **Pipelines**: You may use pipelines to automate the process of processing data or training and deploying machine learning models.
+* **Models**: Where you can manage and deploy machine learning models. You can create, update, and delete models, as well as monitor their performance and usage.
+* **Cluster storage**: Here you can manage the storage resources used by your models and workbenches. You can create, update, and delete storage resources, as well as monitor their usage.
+* **Connections**: This is where you can manage the connections between your workbenches or model runtimes and other services, such as storage (S3), databases or APIs. You can create, update, and delete connections, as well as see which environment is using them.
+* **Permissions**: This is where you can manage the permissions for project. You can create, update, and delete permissions, as well as see which users or groups have access to which resources.
+
+For now we will have a deeper look at the AI models that have been already deployed. For this one the left hand side navigate to `Models/Model deployments` and in the `Project` dropdown select `llm-hosting`.
+
+You should now see three models in the status `Started`
+
+[.bordershadow]
+image::01/02-model-deployments.png[width="50%"]
+
+To see how a model can be access internally click on the `Internal Endpoint` link of a model, f.e. for granite-3.3-8b-instruct:
+
+[.bordershadow]
+image::01/02-inference-endpoint.png[width="50%"]
+
+== Recap: What you just did
+
+You acted as a data scientiest managing a data science project:
+
+* Created a Data Science project
+* Explored the OpenShift AI dashboard and project structure 
+* Discovered models already deployed on the OpenShift AI platform and how they can be accessed internally
+
+This foundational experience is critical before being exposed to using models.

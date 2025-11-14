@@ -1,0 +1,173 @@
+:imagesdir: ../assets/images
+
+[#code-asst]
+= Coding with AI
+
+Welcome to the next stage of our journey!
+
+Now, you become an AI application developer. Your job: build smarter, faster - with a little help from a language model.
+
+== Why Code Assistants Matter
+
+You're not just here to write code - you're here to collaborate with an **AI-powered teammate**.
+
+Modern code assistants can:
+
+* **Understand Full Project Context**: Assistants like Continue, GitHub Copilot, and Cursor can read across files and directories, understanding how your code fits together.
+
+* **Edit code with Natural Language**: You can describe a change—like "add error handling here" or "convert this to async"—and assistants like Continue, Cursor, or CodeWhisperer will apply it intelligently.
+
+* **Proactively Suggest Improvements**: They catch bugs, highlight inefficiencies, and recommend best-practice patterns.
+
+* **Automate Tedious Tasks**: From generating unit tests and docstrings to scaffolding boilerplate or renaming variables across a project—they take care of the grunt work so you can focus on logic and design.
+
+These assistants don’t just write code - they understand your project and help you build better software faster. And the best part? Most of them work seamlessly inside popular IDE's like Visual Studio Code, so you don’t need to switch tools to get started.
+
+Let's get set up.
+
+== Step 1: Setting Up Your Cloud Integrated Developer Environment (IDE) with OpenShift Dev Spaces
+
+As a developer, your environment should be fast, consistent, and ready to go for your work. That is what OpenShift Dev Spaces delivers: instant access to pre-configured, containerized workspaces — all running securely on your OpenShift cluster.
+
+You could also easily leverage our exposed model API endpoint in your local environment as a developer. However, your company has specific restrictions and require you to work within the OpenShift cluster environment.
+
+=== Access OpenShift Dev Spaces Console
+
+Your platform engineer has provided you a direct URL to the Dev Spaces console to begin your work.
+
+*  Navigate to console: https://devspaces.{openshift_cluster_ingress_domain}/[https://devspaces.{openshift_cluster_ingress_domain}]
+
+As a developer, you will create your own workspace without needing to install or configure anything locally. There may however, be some restrictions put in place by your admin around resource limitations or only using approved devfiles (yaml files used to instantiate new workspaces).
+
+*  Create a new workspace by clicking **Create Workspace** and then under **Import from Git** specify the following URL: 
++
+[source,bash,role=execute,subs=attributes+]
+----
+https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-code-development
+----
+
+image::02/02-create-workspace.png[width="100%"]
+
+After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise!
+
+image::02/02-vscode_trust.png[width="100%"]
+
+Now that your workspace is ready do the following
+
+* Open a new terminal in VSCode: **Terminal → New Terminal** (or press `Ctrl+Shift+\``)
+
+* Configure Git with your identity (this is required for later commits):
++
+[source,bash,role=execute,subs="attributes"]
+----
+git config --global user.name "{user}"
+git config --global user.email "{user}@example.com"
+----
+
+* Open the directory in VSCode's file explorer. You should see:
++
+----
+handson-llmaas-code-development
+├── openshift              # Kubernetes manifests
+├── templates              # Frontend UI (complete)
+├── app.py                 # Main Flask application (incomplete)
+├── Dockerfile             # Container configuration
+└── requirements.txt       # Python dependencies
+----
+
+Your repository is now ready in your development environment. Before we dive into the code, let's meet **Continue**.
+
+== Step 2: Add Continue, Your Coding Teammate
+
+**Continue** is an open-source AI code assistant that integrates seamlessly into VS Code. Unlike traditional code completion tools, Continue provides an interactive chat interface where you can have natural conversations about your code. You can ask Continue to perform actions like:
+
+**“Add logging to this function”**
+
+**“Generate a unit test for this file”**
+
+**“Refactor this into smaller components”**
+
+**“Explain what this code does”**
+
+Continue will execute these requests directly in your editor, with full awareness of your codebase and project context.
+
+What makes Continue particularly powerful is its flexibility - it supports custom model endpoints, making it perfect for connecting to your private enterprise models. As an **open-source** solution, Continue gives you complete control over your AI coding workflow. 
+
+== Step 2: Connect Continue to Your Granite Model
+
+Navigate to the **Continue sidebar icon** in the left-hand side navigation panel:
+
+image::02/02-continue_sidebar.png[width="100%"]
+
+We will do two things in this module:
+
+1. Connect to our Granite model within our company's MaaS platform
+2. Use our model's "brain" to help us understand and deploy a fun game, and then work on an impactful Kubernetes deployment.
+
+In order to connect our model to the Continue code extension we must provide the extension our model's endpoint URL and API key from the MaaS application.
+
+IMPORTANT: You need to create an **application** for the service `granite_3_3_8b_instruct` in the 3Scale Developer Portal to get the right credentials for Continue.dev if you haven't done so in xref:module-01-03-api.adoc#api-gateway[Module 1.3: AI at Scale with an API Gateway], navigate to the 3Scale Developer Portal at https://maas.{openshift_cluster_ingress_domain}[https://maas.{openshift_cluster_ingress_domain},window=_blank] and follow these steps:
+
+* Log in with your credentials (username: `{user}`, password: `{password}`)
+* Click on **Applications** in the top navigation
+* Click **Create Application**
+* Select the `granite_3_3_8b_instruct` service
+* Provide a name for your application (e.g., "Continue Code Assistant")
+* After creating the application, copy the **API Key** (User Key) provided
+* Use this API key and the model endpoint URL in your Continue configuration below
+
+=== Enter Connection Details
+
+Click on `Local Config` and then the small settings icon in the **Local Config** pop up.
+
+image::02/02-continue-click-config-option-button.png[width="100%"]
+
+This will open the `config.yaml` file. Delete the file contents and replace with the following:
+
+[source,yaml,role="execute",subs=attributes+]
+----
+name: Local Assistant
+version: 1.0.0
+schema: v1
+models:
+  - name: Granite-3.3-8b-instruct
+    provider: openai
+    model: "granite-33-8b-instruct"
+    apiBase: "https://granite-3-3-8b-instruct-maas-apicast-production.{openshift_cluster_ingress_domain}/v1"
+    apiKey: "YOUR_API_KEY"
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+----
+
+IMPORTANT: Replace `YOUR_API_KEY` with the API key from your MaaS application. 
+
+For example:
+
+* **apiBase**: `https://granite-3-3-8b-instruct-maas-apicast-production.{openshift_cluster_ingress_domain}/v1` (Ensure you retain the `v1` at the end of the URL)
+* **apiKey**: `your-actual-api-key-here`
+* **model**: `the model name`
+
+Reference the complete configuration documentation here: https://docs.continue.dev/reference[Continue Documentation]
+
+When the model is properly configured, you will see the model name, `Granite-3.3-8b-instruct` in the Continue chat sidebar.
+
+image::02/01-model_dropdown.png[width="100%"]
+
+Go ahead - test it out and chat a bit!
+
+== You're Ready to Code with AI
+
+You've now:
+
+* Set up a cloud IDE with OpenShift Dev Spaces
+* Imported and cloned your workshop repository from Gitea
+* Installed Continue and configured it to connect to your private Granite model
+* Set up an AI assistant that can refactor, edit and explain your code!
+
+Next, you will use Continue to help you develop applications with AI assistance. 
