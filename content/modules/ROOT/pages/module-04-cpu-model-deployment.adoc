@@ -231,7 +231,7 @@ image::04/01-deployment_ready.png[Deployment Ready,width=75%]
 +
 [source,text]
 ----
-https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1
+https://qwen-cpu-server-{user}-model-serving.{openshift_cluster_ingress_domain}/v1
 ----
 
 * This is your OpenAI-compatible endpoint for the Qwen model
@@ -370,8 +370,8 @@ This is the most important cell - it configures the connection to your deployed 
 ----
 # Configure the model endpoint
 model = ChatOpenAI(
-    model_name="qwen-0.5b-instruct",
-    openai_api_base="https://qwen-cpu-server-{user}-ai-models.{openshift_cluster_ingress_domain}/v1",
+    model_name="qwen-cpu-server",
+    openai_api_base="https://qwen-cpu-server.{user}-model-serving.svc.cluster.local/v1",
     openai_api_key="not-needed",  # vLLM doesn't require authentication by default
     temperature=0.7,
     max_tokens=200
@@ -380,7 +380,7 @@ model = ChatOpenAI(
 
 Key parameters:
 
-* `model_name`: Must match the model name from your deployment (`qwen-0.5b-instruct`)
+* `model_name`: Must match the model name from your deployment (`qwen-cpu-server`)
 * `openai_api_base`: The inference endpoint URL from your model server
 * `openai_api_key`: Set to "not-needed" since the model server doesn't require authentication (internal to cluster)
 * `temperature`: Controls randomness (0.7 is balanced between creative and focused)
