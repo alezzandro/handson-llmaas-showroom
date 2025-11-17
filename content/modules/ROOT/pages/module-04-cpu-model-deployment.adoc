@@ -7,7 +7,7 @@
 
 Welcome to a hands-on exploration of model deployment flexibility!
 
-In the previous modules, you've worked with GPU-accelerated models and explored pre-configured AI applications. Now, you'll step back into the platform engineer role to deploy a specialized model that runs entirely on CPU resources - perfect for cost-effective deployments, edge scenarios, or when GPU resources are constrained.
+In the previous modules, you've worked with GPU-accelerated models and explored pre-configured AI applications. Now, you'll step back into the platform engineer role to *deploy a specialized model that runs entirely on CPU resources* - perfect for cost-effective deployments, edge scenarios, or when GPU resources are constrained.
 
 This module demonstrates the versatility of OpenShift AI's model serving capabilities. You'll deploy **Qwen2.5-0.5B-Instruct**, a compact yet powerful language model, using a custom vLLM runtime that's been optimized for CPU execution.
 
@@ -66,7 +66,8 @@ image::04/01-rhoai_dashboard_home.png[OpenShift AI Dashboard Home,width=75%]
 
 Create a new project by clicking on `Create project` and enter `{user}-model-serving` as the name:
 
-image::04/01-create_project_model_serving.png[]
+[.bordershadow]
+image::04/01-create_project_model_serving.png[width="100%"]
 
 == Step 3: Select Single Model Serving
 
@@ -74,7 +75,8 @@ OpenShift AI provides centralized model serving capabilities through the dashboa
 
 * click on **Select single model**
 
-image::04/01-single_model_serving.png[]
+[.bordershadow]
+image::04/01-single_model_serving.png[width="100%"]
 
 == Step 4: Initiate Model Deployment
 
@@ -97,7 +99,8 @@ For CPU-based models, horizontal scaling is often more practical than vertical s
 
 * Leave **Model route** enabled (checked) to create an external route for API access
 
-image::04/01-model_route.png[]
+[.bordershadow]
+image::04/01-model_route.png[width="100%"]
 
 == Step 5: Configure Model Server Resources
 
@@ -769,7 +772,7 @@ You now have experience deploying models in both GPU and CPU environments - a cr
 
 You've now explored multiple deployment scenarios:
 
-* **Module 1**: GPU-accelerated models for high-performance inference
+* **Module 2**: GPU-accelerated models for high-performance inference
 * **Module 3**: Pre-configured AI applications with Parasol AI Studio
 * **Module 4** (this module): CPU-optimized models for cost-effective deployment
 

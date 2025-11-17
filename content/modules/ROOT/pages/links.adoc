@@ -15,6 +15,9 @@ https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://co
 
 https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/[https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/,window=_blank]
 
+* Your username: `{user}`
+* Your password: `{password}`
+
 == Gitea Repository
 
 {gitea-repo-url}[{gitea-repo-url},window=_blank]
@@ -26,10 +29,19 @@ https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domai
 
 https://devspaces.{openshift_cluster_ingress_domain}/[https://devspaces.{openshift_cluster_ingress_domain}/,window=_blank]
 
+* Your username: `{user}`
+* Your password: `{password}`
+
 == 3Scale Developer Portal
 
 https://maas.{openshift_cluster_ingress_domain}/[https://maas.{openshift_cluster_ingress_domain}/,window=_blank]
 
+* Your username: `{user}`
+* Your password: `{password}`
+
 == Parasol AI Studio
 
 {parasol_ai_studio_url}[{parasol_ai_studio_url},window=_blank]
+
+* Your username: `{user}`
+* Your password: `{password}`

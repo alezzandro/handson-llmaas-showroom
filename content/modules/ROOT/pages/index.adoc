@@ -43,7 +43,7 @@ Assess what you've built. We'll close with key takeaways, architectural guidance
 
 For our workshop, we have provisioned an OpenShift Container Platform cluster for each participant, with Red Hat OpenShift AI deployed.
 
-Each person attending this lab has a full admin access (`cluster-admin`) to their cluster to be able to do some of the exercises requiring admin priveleges.
+Each person attending this lab has a limited access to the cluster, just enough to be able to in the exercises in this workshop
 
 == Embody the Role
 You’re not just here to observe—you’re here to build, test, and troubleshoot like the teams responsible for AI in production!
