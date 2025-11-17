@@ -18,12 +18,12 @@ Let's get connected.
 * Click to open the following URL in a new tab or window and log in:
 ** https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/[https://rhods-dashboard-redhat-ods-applications.{openshift_cluster_ingress_domain}/,window=_blank]
 
-NOTE: At any point, you can access the OpenShift Container Platform web console by going to the following URL: https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]. 
+NOTE: At any point, you can access the OpenShift Container Platform web console by going to the following URL: https://console-openshift-console.{openshift_cluster_ingress_domain}/[https://console-openshift-console.{openshift_cluster_ingress_domain}/,window=_blank]
 
 * Click on the `Login with OpenShift` button:
 +
 [.bordershadow]
-image::01/02-login3.png[width="50%"]
+image::01/02-login3.png[width="100%"]
 
 * Enter your credentials:
 ** Your username: `{user}`
@@ -31,12 +31,12 @@ image::01/02-login3.png[width="50%"]
 
 +
 [.bordershadow]
-image::01/02-login1.png[width="50%"]
+image::01/02-login1.png[width="100%"]
 
 * After you authenticate, your browser window should look like this
 +
 [.bordershadow]
-image::01/02-rhoai-front-page.png[width="75%"]
+image::01/02-rhoai-front-page.png[width="100%"]
 
 You're now inside the control panel that data scientists and ML engineers use daily. Let's explore what's under the hood.
 
@@ -49,15 +49,15 @@ As a first task, you need to create a Data Science project.
 
 Click on the `Create a project` link in the `Data Science Project` section.
 [.bordershadow]
-image::01/02-create-datascience-project-1.png[width="50%"]
+image::01/02-create-datascience-project-1.png[width="100%"]
 and enter `studentX-dsp` as the name and press the `Create` button
 [.bordershadow]
-image::01/02-create-datascience-project-2.png[width="50%"]
+image::01/02-create-datascience-project-2.png[width="100%"]
 
 You should now see your newly created Data Science project and can explore the tabs across the top.
 
 [.bordershadow]
-image::01/02-project-tabs.png[width="50%"]
+image::01/02-project-tabs.png[width="100%"]
 
 Here's a quick rundown:
 
@@ -73,12 +73,12 @@ For now we will have a deeper look at the AI models that have been already deplo
 You should now see three models in the status `Started`
 
 [.bordershadow]
-image::01/02-model-deployments.png[width="50%"]
+image::01/02-model-deployments.png[width="100%"]
 
 To see how a model can be access internally click on the `Internal Endpoint` link of a model, f.e. for granite-3.3-8b-instruct:
 
 [.bordershadow]
-image::01/02-inference-endpoint.png[width="50%"]
+image::01/02-inference-endpoint.png[width="100%"]
 
 == Recap: What you just did
 

@@ -101,8 +101,8 @@ Complete this function to return all tasks sorted by creation date (newest first
 Remember: 'tasks' is a global list variable defined at the top of the file.
 ----
 and then hit `Enter` or press the `Send` button.
-
-image::02/02-chat_complete_get_tasks.png[width="50%"]
+[.bordershadow]
+image::02/02-chat_complete_get_tasks.png[width="100%"]
 
 * Continue will generate the code in the chat window. **Review the generated code.** It should:
 ** Sort tasks by `created_at` in descending order
@@ -364,7 +364,8 @@ Now let's get your application ready to deploy on OpenShift.
 1. In the top menu bar, click on **Terminal**
 2. Select **New Terminal**
 +
-image::02/02-open-terminal.png[width="50%"]
+[.bordershadow]
+image::02/02-open-terminal.png[width="100%"]
 +
 TIP: The Dev Spaces workspace is already authenticated with OpenShift using your credentials, so you can immediately start using `oc` commands.
 

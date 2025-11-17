@@ -34,9 +34,9 @@ When you launch an application through Parasol AI Studio, the system automatical
 * Injects credentials into your workbench environment
 * Starts the application ready to use
 
-Most of these steps have been part of xref:module-01-03-api.adoc#api-gateway[Module 1.3: AI at Scale with an API Gateway] manually.
-
-image::03/01-parasol-flow.png[]
+Most of these steps have been part of xref:module-01-03-api.adoc#api-gateway[Module 1.3: AI at Scale with an API Gateway] but were done manually.
+[.bordershadow]
+image::03/01-parasol-flow.png[width="100%"]
 
 === Models-as-a-Service (MaaS) Integration
 
@@ -73,7 +73,10 @@ AnythingLLM is an out-of-the-box chatbot application with advanced capabilities:
 * Knowledge base exploration
 * Research assistance
 
-image::03/01-parasol-anythingllm.png[]
+[.bordershadow]
+image::03/01-parasol-anythingllm.png[width="100%"]
+
+Find out more about AnythingLLM https://anythingllm.com/[here].
 
 === Docling Serve UI
 
@@ -91,7 +94,10 @@ Docling Serve provides intelligent document processing capabilities:
 * Document format conversion
 * Content migration projects
 
-image::03/01-parasol-docling.png[]
+[.bordershadow]
+image::03/01-parasol-docling.png[width="100%"]
+
+More about Docling https://www.docling.ai/[here].
 
 === Code Server with Continue.dev
 
@@ -110,7 +116,10 @@ An AI-assisted development environment for writing code with AI help:
 * Understanding legacy codebases
 * Generating boilerplate code and tests
 
-image::03/01-parasol-codeserver.png[]
+[.bordershadow]
+image::03/01-parasol-codeserver.png[width="100%"]
+
+Read more about Continue https://www.continue.dev/[here].
 
 === Stable Diffusion XL Studio
 
@@ -128,7 +137,10 @@ A creative application for generating images from text descriptions:
 * Marketing and design mockups
 * Rapid prototyping of visual ideas
 
-image::03/01-parasol-studio.png[]
+[.bordershadow]
+image::03/01-parasol-studio.png[width="100%"]
+
+Learn more about Stable Diffusion https://stabledifffusion.com/[here].
 
 == How Parasol AI Studio Works
 
@@ -138,26 +150,31 @@ From a user perspective, getting started with any AI application is remarkably s
 
 * **Create a project**
 +
-image:03/01-create_project_1.png[]
+[.bordershadow]
+image:03/01-create_project_1.png[width="100%"]
 +
 and provide a name {user}-parasol-ai and hit `Create`
 +
-image:03/01-create_project_2.png[]
+[.bordershadow]
+image:03/01-create_project_2.png[width="100%"]
 +
 Now you are ready to create your first Parasol AI Studio application
 * **Select an Application**
 +
 First choose `Create an application`
 +
-image:03/01-create_application_1.png[]
+[.bordershadow]
+image:03/01-create_application_1.png[width="100%"]
 +
 Under `Type` you can select from a range of applications
 +
-image:03/01-application_options.png[]
+[.bordershadow]
+image:03/01-application_options.png[width="100%"]
 * **Provide a Name**: Give your application a meaningful name
 * **Create**: Click to create the application
 +
-image:03/01-create_application_2.png[]
+[.bordershadow]
+image:03/01-create_application_2.png[width="100%"]
 * **Use**: Access your fully configured application immediately
 
 
@@ -183,16 +200,16 @@ While you don't need to understand the technical details to use the platform, it
 
 == Key Use Cases
 
-=== Scenario 1: Business Analyst Exploring Documents
+=== Scenario 1: Knowledge Worker Building a Custom Chatbot
 
-A business analyst needs to extract insights from hundreds of PDF reports. Using Parasol AI Studio:
+A knowledge worker wants to create a chatbot that can answer questions about company documentation:
 
-1. Launch the **Docling Serve UI** workbench
-2. Upload PDF documents for processing
-3. Extract structured data, tables, and key information
-4. Export results for further analysis
+1. Launch the **AnythingLLM** workbench
+2. Upload company documents, PDFs, and knowledge base articles
+3. Configure RAG (Retrieval-Augmented Generation) settings in the UI
+4. Test the chatbot by asking questions
+5. Share access with team members
 
-No need to understand document processing APIs or configure authentication—just upload and process.
 
 === Scenario 2: Developer Learning a New Framework
 
@@ -206,7 +223,18 @@ A developer wants to learn a new programming framework with AI assistance:
 
 The workbench is pre-configured with AI capabilities—no manual setup of API keys or model endpoints.
 
-=== Scenario 3: Marketing Team Creating Visual Content
+=== Scenario 3: Business Analyst Exploring Documents
+
+A business analyst needs to extract insights from hundreds of PDF reports. Using Parasol AI Studio:
+
+1. Launch the **Docling Serve UI** workbench
+2. Upload PDF documents for processing
+3. Extract structured data, tables, and key information
+4. Export results for further analysis
+
+No need to understand document processing APIs or configure authentication—just upload and process.
+
+=== Scenario 4: Marketing Team Creating Visual Content
 
 A marketing team needs to quickly generate concept images for a campaign:
 
@@ -216,16 +244,6 @@ A marketing team needs to quickly generate concept images for a campaign:
 4. Download final images for use in marketing materials
 
 The image generation model is ready to use immediately—no configuration required.
-
-=== Scenario 4: Knowledge Worker Building a Custom Chatbot
-
-A knowledge worker wants to create a chatbot that can answer questions about company documentation:
-
-1. Launch the **AnythingLLM** workbench
-2. Upload company documents, PDFs, and knowledge base articles
-3. Configure RAG (Retrieval-Augmented Generation) settings in the UI
-4. Test the chatbot by asking questions
-5. Share access with team members
 
 All LLM connections and API authentication are handled automatically by the platform.
 
@@ -280,15 +298,10 @@ Now it's your turn to experience Parasol AI Studio firsthand. The platform has b
 
 You can access Parasol AI Studio via a link on the OpenShift Console
 
-image::03/01-console_link.png[Parasol AI Studio Dashboard Home]
+[.bordershadow]
+image::03/01-console_link.png[width="100%"]
 
-or by visiting the following URL
-[source,role="execute",subs=attributes+]
-----
-https://my-ai-studio-redhat-ods-applications.{openshift_cluster_ingress_domain}
-----
-
-Use the credentials {user}/{password} to login.
+or by visiting the following URL https://my-ai-studio-redhat-ods-applications.{openshift_cluster_ingress_domain} and credentials *{user}/{password}* to login.
 
 Once logged in, you can:
 

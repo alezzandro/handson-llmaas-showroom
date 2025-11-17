@@ -38,12 +38,12 @@ This insight enables:
 * Click on the `Statistics` tab at the top.
 +
 [.bordershadow]
-image::05/01-statistic_panel.png[]
+image::05/01-statistic_panel.png[width="100%"]
 
 * From the drop-down, select the application you have been using to see detailed metrics: 
-
++
 [.bordershadow]
-image::05/01-statistic_metrics.png[]
+image::05/01-statistic_metrics.png[width="100%"]
 
 As a developer, you can view the statistics of your applications and monitor their usage. You can also view the number of calls made to the API, and the different methods used.
 

@@ -5,7 +5,7 @@
 
 == Code Server
 
-In this exercise we will use a lighter version of `VS Code` running in a container in combination with `continue.dev` similar to the exercise in xref:module-02-01-code-assistant.adoc#code-asst[Module 2.1: Code Assistant]
+In this exercise we will use a lighter version of `VS Code` running in a container in combination with *Continue* similar to the exercise in xref:module-02-01-code-assistant.adoc#code-asst[Module 2.1: Code Assistant]
 
 === Creating the Code Server application
 
@@ -18,15 +18,18 @@ Follow these simple steps to create the Code Server application
 
 The application is shown as **starting** now
 
-image::03/03-code_starting.png[]
+[.bordershadow]
+image::03/03-code_starting.png[width="100%"]
 
 A few moments later an **open** link will appear
 
-image::03/03-code_server_open.png[]
+[.bordershadow]
+image::03/03-code_server_open.png[width="100%"]
 
 Open the link will take you to the **Code Server** dashboard.
 
-image::03/03-code_server_dashboard.png[]
+[.bordershadow]
+image::03/03-code_server_dashboard.png[width="100%"]
 
 === Cloning the Git repository
 
@@ -34,7 +37,8 @@ As a first action we need to clone the git repository containing the application
 
 Navigate to **View/Terminal**
 
-image::03/03-terminal.png[]
+[.bordershadow]
+image::03/03-terminal.png[width="100%"]
 
 In the terminal enter the following command
 
@@ -43,42 +47,47 @@ In the terminal enter the following command
 git clone https://gitea-gitea.{openshift_cluster_ingress_domain}/studentX/handson-llmaas-code-development-2
 ----
 
-image::03/03-git_clone.png[]
+[.bordershadow]
+image::03/03-git_clone.png[width="100%"]
 
-=== Use Continue.dev for code implementation
+=== Use Continue for code implementation
 
 On the file explorer go to **SRC/handson-llmaas-code-development-2** and click on **app.py**
 
-image::03/03-open_app_python.png[]
+[.bordershadow]
+image::03/03-open_app_python.png[width="100%"]
 
 This will open the code in the editor.
 
-Now we are going to interact with continue.dev by clicking on the icon on the left hand side bar.
+Now we are going to interact with *Continue* by clicking on the icon on the left hand side bar.
 
-image::03/03-continue_dev.png[]
+[.bordershadow]
+image::03/03-continue_dev.png[width="100%"]
 
 Mark the **get_task** method starting from `@app.route` until `pass` and press `Ctrl-L`.
 
-This will copy the text into the continue.dev chat window:
+This will copy the text into the *Continue* chat window:
 
-image::03/03-continue_dev_chat.png[]
+[.bordershadow]
+image::03/03-continue_dev_chat.png[width="100%"]
 
-Let us inspect the model that is used for continue.dev by selecting `granite-8b-c` dropdown box below the chat file and on `granite-8b-code-instruct-128k` click on the settings icon.
+Let us inspect the model that is used for *Continue* by selecting `granite-8b-c...` dropdown box below the chat file and on `granite-8b-code-instruct-128k` click on the settings icon.
 
 Here you will see the following information:
 
 * **model**: We are using `granite-8b-code-instruct-128k`
-* **apiBase**: The URL of the model is https://granite-8b-code-instruct-maas-apicast-production.{{openshift_cluster_ingress_domain}}:443/v1
+* **apiBase**: The URL of the model is https://granite-8b-code-instruct-maas-apicast-production.{openshift_cluster_ingress_domain}/v1
 * **apiKey**: This has been generated for us as this is the first time we are using this model.
 
-image::03/03-continue_dev_model.png[]
+[.bordershadow]
+image::03/03-continue_dev_model.png[width="100%"]
 
-Now you are ready to run the same steps as in xref:module-02-02-code-assistant.adoc#code-development[Module 2.2: Code Assistant]
+Now you are ready to run the same steps as in xref:module-02-02-code-development.adoc#code-development[Module 2.2: Code Assistant]
 
 == Recap: What you just did
 
 Now we stepped into the shoes of *Developer* (again)
 
-* Used an LLM as a *Code Assistant*
+✅ Used an LLM as a *Code Assistant*
 
 Notice that everything has been setup automatically for the user with no hassle.

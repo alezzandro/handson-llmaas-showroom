@@ -5,7 +5,7 @@
 
 == Stable Diffusion
 
-In this exercise we will use a Stable Diffusion to generate images via a simple prompt interface
+In this exercise we will use *Stable Diffusion* to generate images via a simple prompt interface.
 
 === Creating the Stable Diffusion application
 
@@ -16,13 +16,15 @@ Follow these simple steps to create the Stable Diffusion application
 * Enter `sdxl` as the name
 * Hit `Create Application`
 
-The application is shown as **starting** now
+The application is shown as **starting** now.
 
-image::03/05-sdxl_starting.png[]
+[.bordershadow]
+image::03/05-sdxl_starting.png[width="100%"]
 
 A few moments later an **open** link will appear
 
-image::03/05-sdxl_open.png[]
+[.bordershadow]
+image::03/05-sdxl_open.png[width="100%"]
 
 === Generating images with Stable Diffusion
 
@@ -44,27 +46,32 @@ You can leave the remaining settings as is.
 
 Now click on **Generate the image**
 
-image::03/05-sdxl_generate.png[]
+[.bordershadow]
+image::03/05-sdxl_generate.png[width="100%"]
 
 The final result looks like this
 
-image::03/05-sdxl_generate_result.png[]
+[.bordershadow]
+image::03/05-sdxl_generate_result.png[width="100%"]
 
-Now you can experiment with you own settings and prompts.
+Now you can experiment with your own settings and prompts.
 
 Also try out different styles apart from photo:
 
 * **Comic** for comic like results
 
-image::03/05-sdxl_generate_comic_result.png[]
+[.bordershadow]
+image::03/05-sdxl_generate_comic_result.png[width="100%"]
 
 * **Anime**
 
-image::03/05-sdxl_generate_anime_result.png[]
+[.bordershadow]
+image::03/05-sdxl_generate_anime_result.png[width="100%"]
 
 * **Line Art**
 
-image::03/05-sdxl_generate_line_art_result.png[]
+[.bordershadow]
+image::03/05-sdxl_generate_line_art_result.png[width="100%"]
 
 Or any other of 108 styles listed https://stable-diffusion-art.com/sdxl-styles/[here].
 
